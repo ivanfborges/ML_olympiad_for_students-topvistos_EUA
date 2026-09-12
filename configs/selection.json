@@ -1,0 +1,107 @@
+{
+  "protocol_version": 1,
+  "seed": 42,
+  "cv_folds": 5,
+  "primary_metric": "f1_macro",
+  "cv_threshold": 0.5,
+  "model_tie_break": "configuration order within 1e-12 of best mean",
+  "threshold_tie_break": "closest to 0.5, then lower, within 1e-12 of best macro F1",
+  "thresholds": [
+    0.2,
+    0.225,
+    0.25,
+    0.275,
+    0.3,
+    0.325,
+    0.35,
+    0.375,
+    0.4,
+    0.425,
+    0.45,
+    0.475,
+    0.5,
+    0.525,
+    0.55,
+    0.575,
+    0.6,
+    0.625,
+    0.65,
+    0.675,
+    0.7,
+    0.725,
+    0.75,
+    0.775,
+    0.8
+  ],
+  "candidates": [
+    {
+      "id": "logistic_c01",
+      "family": "logistic",
+      "parameters": {
+        "C": 0.1
+      }
+    },
+    {
+      "id": "logistic_c1",
+      "family": "logistic",
+      "parameters": {
+        "C": 1
+      }
+    },
+    {
+      "id": "logistic_c10",
+      "family": "logistic",
+      "parameters": {
+        "C": 10
+      }
+    },
+    {
+      "id": "forest_depth10",
+      "family": "random_forest",
+      "parameters": {
+        "n_estimators": 200,
+        "max_depth": 10,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "n_jobs": 1
+      }
+    },
+    {
+      "id": "forest_unlimited",
+      "family": "random_forest",
+      "parameters": {
+        "n_estimators": 200,
+        "max_depth": null,
+        "min_samples_leaf": 5,
+        "max_features": "sqrt",
+        "n_jobs": 1
+      }
+    },
+    {
+      "id": "hist_boost_leaf15",
+      "family": "hist_gradient_boosting",
+      "parameters": {
+        "max_iter": 200,
+        "learning_rate": 0.05,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1,
+        "early_stopping": false,
+        "categorical_features": null
+      }
+    },
+    {
+      "id": "hist_boost_leaf31",
+      "family": "hist_gradient_boosting",
+      "parameters": {
+        "max_iter": 200,
+        "learning_rate": 0.05,
+        "max_leaf_nodes": 31,
+        "min_samples_leaf": 20,
+        "l2_regularization": 1,
+        "early_stopping": false,
+        "categorical_features": null
+      }
+    }
+  ]
+}
