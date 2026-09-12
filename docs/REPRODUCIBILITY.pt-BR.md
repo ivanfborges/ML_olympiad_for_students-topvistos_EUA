@@ -31,7 +31,7 @@ As saídas históricas registram 17.836 linhas rotuladas e 7.644 linhas de submi
 
 ## Andamento da reconstrução
 
-A inspeção dos dados e a entrega dos baselines fixos estão concluídas. A nova implementação ajusta o pré-processamento dentro dos folds, corrige as entradas das métricas e separa treino, validação e teste final reservado. Veja os resultados medidos no [relatório do baseline](BASELINE.pt-BR.md). A seleção de modelo e limiar está concluída; veja o [relatório de seleção](SELECTION.pt-BR.md). A avaliação final continua pendente.
+A inspeção dos dados e a entrega dos baselines fixos estão concluídas. A nova implementação ajusta o pré-processamento dentro dos folds, corrige as entradas das métricas e separa treino, validação e teste final reservado. Veja os resultados medidos no [relatório do baseline](BASELINE.pt-BR.md). A seleção de modelo e limiar está concluída; veja o [relatório de seleção](SELECTION.pt-BR.md). A avaliação final está concluída; veja os resultados do modelo congelado, calibração e segmentos no [relatório final](EVALUATION.pt-BR.md).
 
 O notebook original permanece intacto para permitir distinguir o código histórico da versão reconstruída.
 
@@ -41,4 +41,4 @@ Referências: [boas práticas do scikit-learn](https://scikit-learn.org/stable/c
 
 O [manifesto dos dados](data-manifest.json) registra os arquivos fornecidos e seus hashes. A validação estrutural e sete testes isolados passaram. O exemplo de submissão está incompleto e inclui IDs fora do teste; submissões futuras devem usar os identificadores do arquivo de teste.
 
-Os dados continuam locais e excluídos do Git. O novo baseline foi executado em ambiente isolado com Python 3.11.14 e dependências fixadas. Os 17 testes passaram. A validação numérica e o tratamento de quantidades negativas de empregados estão implementados no pipeline. O teste final ainda não foi avaliado.
+Os dados continuam locais e excluídos do Git. O novo baseline foi executado em ambiente isolado com Python 3.11.14 e dependências fixadas. Os 17 testes passaram. A validação numérica e o tratamento de quantidades negativas de empregados estão implementados no pipeline. O teste final foi posteriormente avaliado na etapa 2.4, sem novo ajuste; não deve ser reutilizado para orientar alterações.

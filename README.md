@@ -2,24 +2,27 @@
 
 **English** | [Português](README.pt-BR.md)
 
-A reproducible classification study built from the 2023 **ML Olympiad for Students — TopVistos EUA** Kaggle project. The current implementation separates training, validation, and a reserved final holdout, fits preprocessing inside each training fold, and compares a bounded set of models with explicit threshold selection.
+A reproducible classification study built from the 2023 **ML Olympiad for Students — TopVistos EUA** Kaggle project. The current implementation separates training, validation, and a final holdout, fits preprocessing inside each training fold, and compares a bounded set of models with explicit threshold selection.
 
-## Results so far
+## Final evaluation
 
-The selected gradient-boosting model reaches **0.710 macro F1** on **3,567 validation cases** with an approval threshold of **0.60**. Model selection used five-fold cross-validation on training data; threshold selection used validation data. **These development scores include selection bias; the final holdout has not been evaluated.**
+The selected gradient-boosting model achieved **0.701 macro F1** on **3,568 final-holdout cases**, with a 95% bootstrap interval of **0.686–0.717**. The approval threshold **0.60** was fixed using validation data before final evaluation.
 
-| Validation metric | Logistic baseline, 0.50 | Selected boosting, 0.60 |
-|---|---:|---:|
-| Macro F1 | 0.681 | 0.710 |
-| F1 — approved class | 0.824 | 0.813 |
-| ROC-AUC | 0.769 | 0.776 |
-| Recall — denied class | 0.448 | 0.590 |
+| Final-holdout metric | Prior / 0.50 | Logistic / 0.50 | Selected boosting / 0.60 |
+|---|---:|---:|---:|
+| Macro F1 | 0.401 | 0.672 | 0.701 |
+| F1 — approved class | 0.802 | 0.817 | 0.808 |
+| ROC-AUC | 0.500 | 0.762 | 0.773 |
+| Recall — denied class | 0.000 | 0.443 | 0.576 |
+| Recall — approved class | 1.000 | 0.881 | 0.820 |
 
-For the selected boosting model, raising the threshold from 0.50 to 0.60 identified 113 additional denied cases and classified 121 additional approved cases as denied. The [selection report](docs/SELECTION.md) explains this tradeoff, all seven candidate configurations and the frozen decision.
+The selected model identifies more denied cases than logistic regression while also misclassifying more approved cases. Performance varies substantially by education group: aggregate improvements do not establish suitability for individual decisions.
 
-![Model comparison and threshold tradeoff](docs/selection/selection.png)
+![Final performance and calibration](docs/evaluation/evaluation.png)
 
-The [original baseline report](docs/BASELINE.md) remains available, including the prior baseline that predicts approval for every case. [Selection results in JSON](docs/selection/metrics.json) and [baseline results in JSON](docs/baseline/metrics.json) record the experiments separately.
+The [final evaluation report](docs/EVALUATION.md) includes uncertainty, calibration, error analysis and limitations. The [segment appendix](docs/evaluation/SEGMENTS.md) shows every predefined group and its support. [Machine-readable final results](docs/evaluation/metrics.json) record metrics and artifact hashes.
+
+The [baseline report](docs/BASELINE.md) and [model-selection report](docs/SELECTION.md) preserve the earlier development stages. Their validation scores are distinct from final-test results. The final holdout has now been evaluated and must not guide further tuning.
 
 ## Reproduce the experiment
 
@@ -47,7 +50,9 @@ python3.11 -m venv .venv
 
 Obtain the [required data](data/README.md) and place it in `data/raw/` before running the experiment. The baseline requires the recorded `train.csv` hash. The tests use synthetic fixtures and run without competition data. Continuous integration installs the locked dependencies and runs the tests on Linux.
 
-Outputs go to `reports/generated/baseline/` and `reports/generated/selection/`: metrics, charts, local model artifacts and the selected decision. These directories are ignored by Git; only aggregate results, decision metadata and charts are curated into the documentation. Load serialized models only from a source you trust.
+Development outputs go to `reports/generated/baseline/` and `reports/generated/selection/`: metrics, charts, local model artifacts and the selected decision. These directories are ignored by Git; only aggregate results, decision metadata and charts are curated into the documentation. Load serialized models only from a source you trust.
+
+Final evaluation loads frozen artifacts and checks their exact hashes; it never fits a model. See the [evaluation instructions](docs/EVALUATION.md#artifacts-and-reproduction) for artifact requirements, commands and cross-environment limits.
 
 ## Engineering choices
 
@@ -55,13 +60,13 @@ Outputs go to `reports/generated/baseline/` and `reports/generated/selection/`: 
 - Imputation, scaling, and category encoding are fitted inside the pipeline; inference handles missing values and unseen categories.
 - IDs and the target are excluded from features. Negative employee counts become missing values with an indicator.
 - Precision and recall use the correct argument order; ROC-AUC uses probabilities.
-- Tests cover data integrity, split separation, preprocessing isolation, metrics, serialization, and execution without final-holdout features or labels.
+- Tests cover data integrity, split separation, preprocessing isolation, metrics, serialization, development execution without final-holdout features or labels, and final evaluation without refitting.
 
 ## Scope and next steps
 
 This study models the historical label `status_do_caso`: `Aprovado=1`, `Negado=0`. It is not validated for visa eligibility or automated immigration decisions. Macro F1 is an internal development criterion; the official competition F1 variant and leaderboard result remain unverified.
 
-Model and threshold selection are complete. Next: evaluate the frozen pipeline and decision threshold on the reserved holdout, assess calibration and examine errors across relevant segments. The original dataset was explored in the historical notebook, so the reserved partition is not new external evidence. Current scores are not directly comparable with that notebook's different split.
+Model selection, threshold selection and final evaluation are complete. Next: finish the inference example and verify the clean-checkout workflow. Further model changes require a new evaluation design. The original dataset was explored in the historical notebook, so the reserved partition is not new external evidence. Current scores are not directly comparable with that notebook's different split.
 
 ## Historical work and data source
 

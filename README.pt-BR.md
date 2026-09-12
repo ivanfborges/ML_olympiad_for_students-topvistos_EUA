@@ -2,24 +2,27 @@
 
 [English](README.md) | **Português**
 
-Estudo reproduzível de classificação desenvolvido a partir do projeto da competição Kaggle **ML Olympiad for Students — TopVistos EUA**, de 2023. A implementação atual separa treino, validação e teste final reservado, ajusta o pré-processamento dentro de cada fold de treino e compara um conjunto limitado de modelos com seleção explícita do limiar.
+Estudo reproduzível de classificação desenvolvido a partir do projeto da competição Kaggle **ML Olympiad for Students — TopVistos EUA**, de 2023. A implementação atual separa treino, validação e teste final, ajusta o pré-processamento dentro de cada fold de treino e compara um conjunto limitado de modelos com seleção explícita do limiar.
 
-## Resultados até aqui
+## Avaliação final
 
-O gradient boosting selecionado alcança **0,710 de F1 macro** em **3.567 casos de validação**, com limiar de aprovação de **0,60**. A seleção do modelo usou validação cruzada em cinco folds no treino; a escolha do limiar usou a validação. **Esses resultados de desenvolvimento têm viés de seleção; o teste final ainda não foi avaliado.**
+O gradient boosting selecionado alcançou **F1 macro de 0,701** nos **3.568 casos do teste final**, com intervalo bootstrap de 95% de **0,686–0,717**. O limiar de aprovação **0,60** foi definido na validação antes da avaliação final.
 
-| Métrica de validação | Baseline logístico, 0,50 | Boosting escolhido, 0,60 |
-|---|---:|---:|
-| F1 macro | 0,681 | 0,710 |
-| F1 — classe aprovada | 0,824 | 0,813 |
-| ROC-AUC | 0,769 | 0,776 |
-| Recall — classe negada | 0,448 | 0,590 |
+| Métrica no teste final | Frequência / 0,50 | Logística / 0,50 | Boosting selecionado / 0,60 |
+|---|---:|---:|---:|
+| F1 macro | 0,401 | 0,672 | 0,701 |
+| F1 — classe aprovada | 0,802 | 0,817 | 0,808 |
+| ROC-AUC | 0,500 | 0,762 | 0,773 |
+| Recall — classe negada | 0,000 | 0,443 | 0,576 |
+| Recall — classe aprovada | 1,000 | 0,881 | 0,820 |
 
-No boosting selecionado, elevar o limiar de 0,50 para 0,60 identificou 113 negativas adicionais e classificou 121 casos aprovados adicionais como negados. O [relatório de seleção](docs/SELECTION.pt-BR.md) explica essa troca, as sete configurações candidatas e a decisão congelada.
+O selecionado identifica mais negativas que a regressão logística, mas também erra mais casos aprovados. O desempenho varia bastante por escolaridade: a melhoria agregada não demonstra adequação a decisões individuais.
 
-![Comparação de modelos e efeito do limiar](docs/selection/selection.png)
+![Desempenho final e calibração](docs/evaluation/evaluation.png)
 
-O [relatório original dos baselines](docs/BASELINE.pt-BR.md) continua disponível, incluindo o baseline de frequência que prevê aprovação para todos os casos. Os [resultados da seleção em JSON](docs/selection/metrics.json) e os [resultados dos baselines em JSON](docs/baseline/metrics.json) registram os experimentos separadamente.
+O [relatório de avaliação final](docs/EVALUATION.pt-BR.md) inclui incerteza, calibração, análise de erros e limitações. O [apêndice de segmentos](docs/evaluation/SEGMENTS.pt-BR.md) apresenta cada grupo predefinido e seu suporte. Os [resultados finais em JSON](docs/evaluation/metrics.json) registram métricas e hashes dos artefatos.
+
+Os relatórios de [baseline](docs/BASELINE.pt-BR.md) e [seleção de modelos](docs/SELECTION.pt-BR.md) preservam as etapas anteriores de desenvolvimento. Seus resultados de validação são distintos dos resultados de teste final. O teste final já foi avaliado e não deve orientar novos ajustes.
 
 ## Reproduzir o experimento
 
@@ -47,7 +50,9 @@ python3.11 -m venv .venv
 
 Obtenha os [dados necessários](data/README.pt-BR.md) e coloque-os em `data/raw/` antes de executar o experimento. O baseline exige o hash registrado do `train.csv`. Os testes usam dados sintéticos e dispensam os arquivos da competição. A integração contínua instala as dependências fixadas e executa os testes no Linux.
 
-As saídas ficam em `reports/generated/baseline/` e `reports/generated/selection/`: métricas, gráficos, modelos locais e decisão selecionada. Essas pastas são ignoradas pelo Git; somente resultados agregados, metadados da decisão e gráficos são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
+As saídas de desenvolvimento ficam em `reports/generated/baseline/` e `reports/generated/selection/`: métricas, gráficos, modelos locais e decisão selecionada. Essas pastas são ignoradas pelo Git; somente resultados agregados, metadados da decisão e gráficos são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
+
+A avaliação final carrega os artefatos congelados e verifica seus hashes exatos; nunca ajusta um modelo. Consulte as [instruções de avaliação](docs/EVALUATION.pt-BR.md#artefatos-e-reprodução) para requisitos dos artefatos, comandos e limites entre ambientes.
 
 ## Decisões de implementação
 
@@ -55,13 +60,13 @@ As saídas ficam em `reports/generated/baseline/` e `reports/generated/selection
 - Imputação, escala e codificação de categorias ajustadas dentro do pipeline; inferência aceita valores ausentes e categorias desconhecidas.
 - IDs e alvo ficam fora das variáveis. Quantidades negativas de empregados viram valores ausentes com um indicador.
 - Precisão e recall usam a ordem correta dos argumentos; ROC-AUC usa probabilidades.
-- Testes cobrem integridade dos dados, separação das partições, isolamento do pré-processamento, métricas, serialização e execução sem variáveis ou rótulos do teste final.
+- Testes cobrem integridade dos dados, separação das partições, isolamento do pré-processamento, métricas, serialização execução de desenvolvimento sem variáveis ou rótulos do teste final e avaliação final sem novo ajuste.
 
 ## Escopo e próximos passos
 
 O estudo modela o rótulo histórico `status_do_caso`: `Aprovado=1`, `Negado=0`. Não foi validado para determinar elegibilidade a vistos ou automatizar decisões de imigração. F1 macro é um critério interno de desenvolvimento; a variante oficial de F1 e o resultado no ranking da competição permanecem sem verificação.
 
-A seleção de modelo e limiar está concluída. Próximo passo: avaliar o pipeline e o limiar congelados no teste reservado, examinar calibração e os erros por segmentos relevantes. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
+A seleção de modelo e limiar e a avaliação final estão concluídas. Próximo passo: finalizar o exemplo de inferência e verificar o fluxo em um checkout limpo. Novas alterações no modelo exigem outro desenho de avaliação. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
 
 ## Trabalho histórico e fonte dos dados
 

@@ -1,0 +1,987 @@
+{
+  "rows": 3568,
+  "class_counts": {
+    "denied": 1180,
+    "approved": 2388
+  },
+  "metrics": {
+    "prior_baseline": {
+      "f1_macro": 0.40094022834116855,
+      "f1_approved": 0.8018804566823371,
+      "accuracy": 0.6692825112107623,
+      "balanced_accuracy": 0.5,
+      "roc_auc": 0.5,
+      "average_precision_approved": 0.6692825112107623,
+      "brier_score": 0.2213434313987159,
+      "precision_approved": 0.6692825112107623,
+      "recall_approved": 1.0,
+      "precision_denied": 0.0,
+      "recall_denied": 0.0,
+      "confusion_matrix": [
+        [
+          0,
+          1180
+        ],
+        [
+          0,
+          2388
+        ]
+      ],
+      "confusion_matrix_order": [
+        "denied_0",
+        "approved_1"
+      ],
+      "predicted_approval_rate": 1.0
+    },
+    "logistic_regression": {
+      "f1_macro": 0.6715866293331082,
+      "f1_approved": 0.817016317016317,
+      "accuracy": 0.7359865470852018,
+      "balanced_accuracy": 0.6619368026573546,
+      "roc_auc": 0.7617015160548506,
+      "average_precision_approved": 0.8576002594177429,
+      "brier_score": 0.18047750292587772,
+      "precision_approved": 0.7619565217391304,
+      "recall_approved": 0.8806532663316583,
+      "precision_denied": 0.6472772277227723,
+      "recall_denied": 0.44322033898305085,
+      "confusion_matrix": [
+        [
+          523,
+          657
+        ],
+        [
+          285,
+          2103
+        ]
+      ],
+      "confusion_matrix_order": [
+        "denied_0",
+        "approved_1"
+      ],
+      "predicted_approval_rate": 0.773542600896861
+    },
+    "selected_boosting": {
+      "f1_macro": 0.7012404839283473,
+      "f1_approved": 0.8083350526098617,
+      "accuracy": 0.7396300448430493,
+      "balanced_accuracy": 0.6983114726173238,
+      "roc_auc": 0.7725317974051047,
+      "average_precision_approved": 0.8675037318664127,
+      "brier_score": 0.17472973351347282,
+      "precision_approved": 0.7966653111020741,
+      "recall_approved": 0.8203517587939698,
+      "precision_denied": 0.6131650135256989,
+      "recall_denied": 0.576271186440678,
+      "confusion_matrix": [
+        [
+          680,
+          500
+        ],
+        [
+          429,
+          1959
+        ]
+      ],
+      "confusion_matrix_order": [
+        "denied_0",
+        "approved_1"
+      ],
+      "predicted_approval_rate": 0.6891816143497758
+    }
+  },
+  "uncertainty": {
+    "method": "paired class-stratified percentile bootstrap",
+    "resamples": 1000,
+    "seed": 20260912,
+    "confidence": 0.95,
+    "scope": "Conditional on fixed models and observed class counts; excludes training and selection uncertainty.",
+    "intervals": {
+      "prior_baseline_f1_macro": [
+        0.40094022834116855,
+        0.40094022834116855
+      ],
+      "logistic_regression_f1_macro": [
+        0.6553929853541581,
+        0.6877546433102135
+      ],
+      "selected_boosting_f1_macro": [
+        0.6858395480451385,
+        0.7169279758258363
+      ],
+      "selected_roc_auc": [
+        0.7549760676617552,
+        0.788565581260824
+      ],
+      "selected_brier_score": [
+        0.16881932192464955,
+        0.18058970557870663
+      ],
+      "delta_f1_selected_minus_logistic": [
+        0.016753487652083898,
+        0.041418663496175054
+      ]
+    }
+  },
+  "delta_f1_selected_minus_logistic": 0.02965385459523906,
+  "calibration": {
+    "bins": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "upper_inclusive": false,
+        "rows": 2,
+        "mean_probability": 0.07465525498747577,
+        "observed_approval_rate": 0.0,
+        "observed_rate_wilson95": [
+          0.0,
+          0.6576197724933468
+        ]
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "upper_inclusive": false,
+        "rows": 45,
+        "mean_probability": 0.16279260834243398,
+        "observed_approval_rate": 0.1111111111111111,
+        "observed_rate_wilson95": [
+          0.048404717945671874,
+          0.23499096995768576
+        ]
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "upper_inclusive": false,
+        "rows": 240,
+        "mean_probability": 0.2585786718558037,
+        "observed_approval_rate": 0.275,
+        "observed_rate_wilson95": [
+          0.2223885797371556,
+          0.3347006842365459
+        ]
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "upper_inclusive": false,
+        "rows": 321,
+        "mean_probability": 0.34988925765246187,
+        "observed_approval_rate": 0.3426791277258567,
+        "observed_rate_wilson95": [
+          0.29289471547037915,
+          0.39618438063185224
+        ]
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "upper_inclusive": false,
+        "rows": 267,
+        "mean_probability": 0.44096453222709087,
+        "observed_approval_rate": 0.44569288389513106,
+        "observed_rate_wilson95": [
+          0.3872633282199486,
+          0.5056629611071263
+        ]
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6000000000000001,
+        "upper_inclusive": false,
+        "rows": 234,
+        "mean_probability": 0.560432972409315,
+        "observed_approval_rate": 0.5512820512820513,
+        "observed_rate_wilson95": [
+          0.4872394907094386,
+          0.613668063923807
+        ]
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "upper_inclusive": false,
+        "rows": 489,
+        "mean_probability": 0.6538528686942762,
+        "observed_approval_rate": 0.6605316973415133,
+        "observed_rate_wilson95": [
+          0.6174554881961295,
+          0.7011053739027707
+        ]
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "upper_inclusive": false,
+        "rows": 731,
+        "mean_probability": 0.7451913981946731,
+        "observed_approval_rate": 0.7606019151846786,
+        "observed_rate_wilson95": [
+          0.7283570330137819,
+          0.7901221510696061
+        ]
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "upper_inclusive": false,
+        "rows": 660,
+        "mean_probability": 0.8508887224159559,
+        "observed_approval_rate": 0.8151515151515152,
+        "observed_rate_wilson95": [
+          0.7837429509730355,
+          0.8429126977100382
+        ]
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "upper_inclusive": true,
+        "rows": 579,
+        "mean_probability": 0.9402822644006668,
+        "observed_approval_rate": 0.9360967184801382,
+        "observed_rate_wilson95": [
+          0.9131593478630797,
+          0.9532855358310273
+        ]
+      }
+    ],
+    "ece": 0.014763272644699607,
+    "ece_definition": "Sum of bin-count weights times absolute predicted-minus-observed approval rate."
+  },
+  "segments": {
+    "minimum_rows": 100,
+    "minimum_per_class": 20,
+    "groups": {
+      "continente": [
+        {
+          "category": "América do Norte",
+          "rows": 423,
+          "denied": 153,
+          "approved": 270,
+          "metrics": {
+            "f1_macro": 0.6601534470386929,
+            "f1_approved": 0.761384335154827,
+            "accuracy": 0.6903073286052009,
+            "balanced_accuracy": 0.6582788671023965,
+            "roc_auc": 0.7345921084483176,
+            "average_precision_approved": 0.8253395589963654,
+            "brier_score": 0.19439123235507388,
+            "precision_approved": 0.7491039426523297,
+            "recall_approved": 0.774074074074074,
+            "precision_denied": 0.5763888888888888,
+            "recall_denied": 0.5424836601307189,
+            "confusion_matrix": [
+              [
+                83,
+                70
+              ],
+              [
+                61,
+                209
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.6595744680851063
+          },
+          "recall_denied_wilson95": [
+            0.46346855853604174,
+            0.6194176891292645
+          ],
+          "recall_approved_wilson95": [
+            0.7205498475960366,
+            0.8199088566387644
+          ]
+        },
+        {
+          "category": "América do Sul",
+          "rows": 117,
+          "denied": 43,
+          "approved": 74,
+          "metrics": {
+            "f1_macro": 0.6520247083047358,
+            "f1_approved": 0.723404255319149,
+            "accuracy": 0.6666666666666666,
+            "balanced_accuracy": 0.6585480829666877,
+            "roc_auc": 0.7195160276555626,
+            "average_precision_approved": 0.8046961589713186,
+            "brier_score": 0.20283456764702185,
+            "precision_approved": 0.7611940298507462,
+            "recall_approved": 0.6891891891891891,
+            "precision_denied": 0.54,
+            "recall_denied": 0.627906976744186,
+            "confusion_matrix": [
+              [
+                27,
+                16
+              ],
+              [
+                23,
+                51
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.5726495726495726
+          },
+          "recall_denied_wilson95": [
+            0.4785980915968848,
+            0.7562366099034943
+          ],
+          "recall_approved_wilson95": [
+            0.5766138969178798,
+            0.7830915919591632
+          ]
+        },
+        {
+          "category": "Europa",
+          "rows": 552,
+          "denied": 112,
+          "approved": 440,
+          "metrics": {
+            "f1_macro": 0.709532483302975,
+            "f1_approved": 0.9005464480874317,
+            "accuracy": 0.8351449275362319,
+            "balanced_accuracy": 0.6869318181818183,
+            "roc_auc": 0.7672483766233767,
+            "average_precision_approved": 0.9237178019672576,
+            "brier_score": 0.1302366162043781,
+            "precision_approved": 0.8673684210526316,
+            "recall_approved": 0.9363636363636364,
+            "precision_denied": 0.6363636363636364,
+            "recall_denied": 0.4375,
+            "confusion_matrix": [
+              [
+                49,
+                63
+              ],
+              [
+                28,
+                412
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.8605072463768116
+          },
+          "recall_denied_wilson95": [
+            0.3492116642097176,
+            0.5299335041736504
+          ],
+          "recall_approved_wilson95": [
+            0.9095654130924611,
+            0.9556083834706284
+          ]
+        },
+        {
+          "category": "Oceania",
+          "rows": 25,
+          "denied": 8,
+          "approved": 17,
+          "metrics": null,
+          "suppression_reason": "Below predefined row or per-class support."
+        },
+        {
+          "category": "África",
+          "rows": 72,
+          "denied": 22,
+          "approved": 50,
+          "metrics": null,
+          "suppression_reason": "Below predefined row or per-class support."
+        },
+        {
+          "category": "Ásia",
+          "rows": 2379,
+          "denied": 842,
+          "approved": 1537,
+          "metrics": {
+            "f1_macro": 0.7012448812448813,
+            "f1_approved": 0.7927927927927928,
+            "accuracy": 0.7292980243799916,
+            "balanced_accuracy": 0.6994743284029568,
+            "roc_auc": 0.7688323800722325,
+            "average_precision_approved": 0.8532767058190683,
+            "brier_score": 0.1800667577058387,
+            "precision_approved": 0.784213876511776,
+            "recall_approved": 0.8015614834092388,
+            "precision_denied": 0.6225247524752475,
+            "recall_denied": 0.5973871733966746,
+            "confusion_matrix": [
+              [
+                503,
+                339
+              ],
+              [
+                305,
+                1232
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.6603614964270702
+          },
+          "recall_denied_wilson95": [
+            0.5638916259030297,
+            0.6299981371131452
+          ],
+          "recall_approved_wilson95": [
+            0.7808818420061548,
+            0.8207374840402076
+          ]
+        }
+      ],
+      "educacao_do_empregado": [
+        {
+          "category": "Doutorado",
+          "rows": 311,
+          "denied": 45,
+          "approved": 266,
+          "metrics": {
+            "f1_macro": 0.5432867132867133,
+            "f1_approved": 0.9265734265734266,
+            "accuracy": 0.864951768488746,
+            "balanced_accuracy": 0.5425647451963241,
+            "roc_auc": 0.7553884711779449,
+            "average_precision_approved": 0.9448953463557005,
+            "brier_score": 0.11072504354518124,
+            "precision_approved": 0.8660130718954249,
+            "recall_approved": 0.9962406015037594,
+            "precision_denied": 0.8,
+            "recall_denied": 0.08888888888888889,
+            "confusion_matrix": [
+              [
+                4,
+                41
+              ],
+              [
+                1,
+                265
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.9839228295819936
+          },
+          "recall_denied_wilson95": [
+            0.035111116726370226,
+            0.2073357533428935
+          ],
+          "recall_approved_wilson95": [
+            0.9790161906847381,
+            0.9993360653169026
+          ]
+        },
+        {
+          "category": "Ensino Médio",
+          "rows": 480,
+          "denied": 310,
+          "approved": 170,
+          "metrics": {
+            "f1_macro": 0.4755153343388637,
+            "f1_approved": 0.1641025641025641,
+            "accuracy": 0.6604166666666667,
+            "balanced_accuracy": 0.5325426944971536,
+            "roc_auc": 0.6234629981024669,
+            "average_precision_approved": 0.4791289079373692,
+            "brier_score": 0.21785172597955935,
+            "precision_approved": 0.64,
+            "recall_approved": 0.09411764705882353,
+            "precision_denied": 0.6615384615384615,
+            "recall_denied": 0.9709677419354839,
+            "confusion_matrix": [
+              [
+                301,
+                9
+              ],
+              [
+                154,
+                16
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.052083333333333336
+          },
+          "recall_denied_wilson95": [
+            0.945753784862366,
+            0.9846522905402699
+          ],
+          "recall_approved_wilson95": [
+            0.0587643588727376,
+            0.1474088926855239
+          ]
+        },
+        {
+          "category": "Ensino Superior",
+          "rows": 1449,
+          "denied": 545,
+          "approved": 904,
+          "metrics": {
+            "f1_macro": 0.6514116327913846,
+            "f1_approved": 0.7555791710945803,
+            "accuracy": 0.6825396825396826,
+            "balanced_accuracy": 0.6482980839490136,
+            "roc_auc": 0.6865825688073394,
+            "average_precision_approved": 0.7378569797212062,
+            "brier_score": 0.20547176975003617,
+            "precision_approved": 0.7269938650306749,
+            "recall_approved": 0.786504424778761,
+            "precision_denied": 0.5902335456475584,
+            "recall_denied": 0.5100917431192661,
+            "confusion_matrix": [
+              [
+                278,
+                267
+              ],
+              [
+                193,
+                711
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.6749482401656315
+          },
+          "recall_denied_wilson95": [
+            0.46819891778386036,
+            0.5518432999152834
+          ],
+          "recall_approved_wilson95": [
+            0.7586089713094941,
+            0.8119752369430056
+          ]
+        },
+        {
+          "category": "Mestrado",
+          "rows": 1328,
+          "denied": 280,
+          "approved": 1048,
+          "metrics": {
+            "f1_macro": 0.6517357979266583,
+            "f1_approved": 0.8798908098271155,
+            "accuracy": 0.8012048192771084,
+            "balanced_accuracy": 0.6345692475463468,
+            "roc_auc": 0.7623636859323882,
+            "average_precision_approved": 0.9202438533403128,
+            "brier_score": 0.14058944111109095,
+            "precision_approved": 0.8408695652173913,
+            "recall_approved": 0.9227099236641222,
+            "precision_denied": 0.5449438202247191,
+            "recall_denied": 0.3464285714285714,
+            "confusion_matrix": [
+              [
+                97,
+                183
+              ],
+              [
+                81,
+                967
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.8659638554216867
+          },
+          "recall_denied_wilson95": [
+            0.29311212058958636,
+            0.40390183798674983
+          ],
+          "recall_approved_wilson95": [
+            0.9049538057209787,
+            0.9373784607722697
+          ]
+        }
+      ],
+      "regiao_de_emprego": [
+        {
+          "category": "Ilha",
+          "rows": 59,
+          "denied": 23,
+          "approved": 36,
+          "metrics": null,
+          "suppression_reason": "Below predefined row or per-class support."
+        },
+        {
+          "category": "Meio-Oeste",
+          "rows": 596,
+          "denied": 147,
+          "approved": 449,
+          "metrics": {
+            "f1_macro": 0.6741388737014762,
+            "f1_approved": 0.864406779661017,
+            "accuracy": 0.785234899328859,
+            "balanced_accuracy": 0.6584246170628607,
+            "roc_auc": 0.7357165583382574,
+            "average_precision_approved": 0.8985750967670304,
+            "brier_score": 0.1576363227197366,
+            "precision_approved": 0.8242424242424242,
+            "recall_approved": 0.9086859688195991,
+            "precision_denied": 0.594059405940594,
+            "recall_denied": 0.40816326530612246,
+            "confusion_matrix": [
+              [
+                60,
+                87
+              ],
+              [
+                41,
+                408
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.8305369127516778
+          },
+          "recall_denied_wilson95": [
+            0.3320329654083731,
+            0.48897115235148625
+          ],
+          "recall_approved_wilson95": [
+            0.8784627045589571,
+            0.9319754584037593
+          ]
+        },
+        {
+          "category": "Nordeste",
+          "rows": 974,
+          "denied": 352,
+          "approved": 622,
+          "metrics": {
+            "f1_macro": 0.7198860912961345,
+            "f1_approved": 0.7914963205233033,
+            "accuracy": 0.7381930184804928,
+            "balanced_accuracy": 0.7228743422975739,
+            "roc_auc": 0.7877379603916983,
+            "average_precision_approved": 0.8498643912018723,
+            "brier_score": 0.1745994068401404,
+            "precision_approved": 0.8053244592346089,
+            "recall_approved": 0.7781350482315113,
+            "precision_denied": 0.6300268096514745,
+            "recall_denied": 0.6676136363636364,
+            "confusion_matrix": [
+              [
+                235,
+                117
+              ],
+              [
+                138,
+                484
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.6170431211498973
+          },
+          "recall_denied_wilson95": [
+            0.6168262267185928,
+            0.7147821260322859
+          ],
+          "recall_approved_wilson95": [
+            0.7438303433812559,
+            0.80902532816851
+          ]
+        },
+        {
+          "category": "Oeste",
+          "rows": 899,
+          "denied": 349,
+          "approved": 550,
+          "metrics": {
+            "f1_macro": 0.7013210903573484,
+            "f1_approved": 0.7707581227436823,
+            "accuracy": 0.7174638487208009,
+            "balanced_accuracy": 0.7005027350872624,
+            "roc_auc": 0.7673300338629852,
+            "average_precision_approved": 0.8255319418869593,
+            "brier_score": 0.18787189301194068,
+            "precision_approved": 0.7652329749103942,
+            "recall_approved": 0.7763636363636364,
+            "precision_denied": 0.6392961876832844,
+            "recall_denied": 0.6246418338108882,
+            "confusion_matrix": [
+              [
+                218,
+                131
+              ],
+              [
+                123,
+                427
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.6206896551724138
+          },
+          "recall_denied_wilson95": [
+            0.5727427248760604,
+            0.6738269392750318
+          ],
+          "recall_approved_wilson95": [
+            0.7396914978514834,
+            0.8092020440789337
+          ]
+        },
+        {
+          "category": "Sul",
+          "rows": 1040,
+          "denied": 309,
+          "approved": 731,
+          "metrics": {
+            "f1_macro": 0.6772413793103448,
+            "f1_approved": 0.82,
+            "accuracy": 0.7403846153846154,
+            "balanced_accuracy": 0.6714656962355952,
+            "roc_auc": 0.7572240004604234,
+            "average_precision_approved": 0.8826041731958121,
+            "brier_score": 0.1709113040464784,
+            "precision_approved": 0.7997399219765929,
+            "recall_approved": 0.841313269493844,
+            "precision_denied": 0.5719557195571956,
+            "recall_denied": 0.5016181229773463,
+            "confusion_matrix": [
+              [
+                155,
+                154
+              ],
+              [
+                116,
+                615
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.739423076923077
+          },
+          "recall_denied_wilson95": [
+            0.4461926491080891,
+            0.5570038581699733
+          ],
+          "recall_approved_wilson95": [
+            0.8130508039925923,
+            0.8660072350037609
+          ]
+        }
+      ],
+      "unidade_de_salario": [
+        {
+          "category": "Ano",
+          "rows": 3238,
+          "denied": 980,
+          "approved": 2258,
+          "metrics": {
+            "f1_macro": 0.6849273592022147,
+            "f1_approved": 0.8231000429368828,
+            "accuracy": 0.7455219271155034,
+            "balanced_accuracy": 0.6780621283057067,
+            "roc_auc": 0.7612360134487808,
+            "average_precision_approved": 0.8750997984768976,
+            "brier_score": 0.17097189992372586,
+            "precision_approved": 0.79875,
+            "recall_approved": 0.8489813994685562,
+            "precision_denied": 0.5930787589498807,
+            "recall_denied": 0.5071428571428571,
+            "confusion_matrix": [
+              [
+                497,
+                483
+              ],
+              [
+                341,
+                1917
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.7411982705373688
+          },
+          "recall_denied_wilson95": [
+            0.47587494137639225,
+            0.5383549936141311
+          ],
+          "recall_approved_wilson95": [
+            0.8336203686717687,
+            0.8631570265138839
+          ]
+        },
+        {
+          "category": "Hora",
+          "rows": 289,
+          "denied": 184,
+          "approved": 105,
+          "metrics": {
+            "f1_macro": 0.5595450746464332,
+            "f1_approved": 0.33093525179856115,
+            "accuracy": 0.6782006920415224,
+            "balanced_accuracy": 0.5796325051759834,
+            "roc_auc": 0.6558747412008282,
+            "average_precision_approved": 0.5385759165941664,
+            "brier_score": 0.21352821028920008,
+            "precision_approved": 0.6764705882352942,
+            "recall_approved": 0.21904761904761905,
+            "precision_denied": 0.6784313725490196,
+            "recall_denied": 0.9402173913043478,
+            "confusion_matrix": [
+              [
+                173,
+                11
+              ],
+              [
+                82,
+                23
+              ]
+            ],
+            "confusion_matrix_order": [
+              "denied_0",
+              "approved_1"
+            ],
+            "predicted_approval_rate": 0.11764705882352941
+          },
+          "recall_denied_wilson95": [
+            0.8961355788939664,
+            0.9662938390687563
+          ],
+          "recall_approved_wilson95": [
+            0.15063136961406626,
+            0.30729577837467165
+          ]
+        },
+        {
+          "category": "Mês",
+          "rows": 10,
+          "denied": 1,
+          "approved": 9,
+          "metrics": null,
+          "suppression_reason": "Below predefined row or per-class support."
+        },
+        {
+          "category": "Semana",
+          "rows": 31,
+          "denied": 15,
+          "approved": 16,
+          "metrics": null,
+          "suppression_reason": "Below predefined row or per-class support."
+        }
+      ]
+    },
+    "scope": "Descriptive overlapping segments; no multiple-comparison correction or causal interpretation."
+  },
+  "phase": "final_holdout_evaluation",
+  "holdout_evaluated": true,
+  "refit_performed": false,
+  "config": {
+    "protocol_version": 1,
+    "split_seed": 42,
+    "primary_metric": "f1_macro",
+    "bootstrap": {
+      "resamples": 1000,
+      "seed": 20260912,
+      "confidence": 0.95,
+      "method": "paired stratified percentile"
+    },
+    "calibration_bins": 10,
+    "segments": [
+      "continente",
+      "educacao_do_empregado",
+      "regiao_de_emprego",
+      "unidade_de_salario"
+    ],
+    "segment_min_rows": 100,
+    "segment_min_per_class": 20,
+    "models": {
+      "prior_baseline": {
+        "threshold": 0.5,
+        "sha256": "1bb0683443797060b7280fce013dce03a9ee7044a120376fc8ab27700192b333"
+      },
+      "logistic_regression": {
+        "threshold": 0.5,
+        "sha256": "214bd10016cb8dfd396972a2a188086f4ee8752ad0bc43c4bc5979f6c8c40388"
+      },
+      "selected_boosting": {
+        "threshold": 0.6,
+        "sha256": "b57ab43f5d58324ff414fa7301d05542e5035f9b71010bed1b3aed19a3b293bb"
+      }
+    }
+  },
+  "partitions": {
+    "train": {
+      "rows": 10701,
+      "membership_sha256": "70ef299c9fc5697b920a5d1306ab5d2af2b90d915a061a23408aff72b4eb77d9"
+    },
+    "validation": {
+      "rows": 3567,
+      "membership_sha256": "34792bd491ebed6e3f26049c16bc33896882c1f24d6c1cbf839f1fc635ee17cc"
+    },
+    "holdout": {
+      "rows": 3568,
+      "membership_sha256": "8bcfc7bbb726e244a596b55185f707c72f2bebbf75688b32f671daea5ec803e5"
+    }
+  },
+  "data_sha256": "db62594bccc14703a0afa5688f89b53bc39f421a536e8c9e40b43d0ecac1715f",
+  "frozen_decision_sha256": "56f9e5bb4d0f25ea16eb50b2545400c65172fb2d67300db7d0c38f2825cf2634",
+  "training_source_sha256": {
+    "configs/selection.json": "771c23a16dede602a3e6ad186fb2ceb5ded5188c0a4ccccde72498444f1b77b3",
+    "requirements-lock.txt": "715beb0becffdcaf60717142e8d9fbe566165620a92f00ed158084946c1bf2ab",
+    "scripts/inspect_data.py": "c4f43e6486c9998d8537256df49e040c731da128a769917fe3659b7f40a558d6",
+    "topvistos/data.py": "758b2224c2082439c49a10dd2be54d6e53c74f1e29a850bbea2adbe260bdc46b",
+    "topvistos/modeling.py": "26429d93ca9427834ca9e680318202caceb0115a504338ebc89c3be3faae1394",
+    "topvistos/baseline.py": "d6fb34061b76b38cf4d8b32304b65b171b12f90924df77e13b757f26cbf76ab9",
+    "topvistos/selection.py": "ad70b36041d9eac2275f94ecf897cebeca8694bf6cab5637a38aae8727fdd2cf"
+  },
+  "evaluation_source_sha256": {
+    "configs/evaluation.json": "25715d8125b6ee39e33d23672eac3c9d947587d8ecc673f85d5f9a41bf2951c9",
+    "topvistos/evaluation.py": "f5c04bce714dd4f3b351b1719aa2e06abae396d1c1cd5cfe885bb0bbb0f8314c",
+    "topvistos/evaluation_stats.py": "ecce9c5fc3e3cc724facb2c35526446a55f2c2219aac5b3a1b25f0d30e6b22a0"
+  },
+  "environment": {
+    "python": "3.11.14",
+    "system": "Windows",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.17.1",
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.2",
+      "threadpoolctl": "3.6.0"
+    },
+    "numeric_thread_limit": 1
+  },
+  "limitations": [
+    "The final holdout is now consumed; do not reuse it as unseen evidence for later changes.",
+    "Random-case historical evaluation does not establish temporal, employer-group or external generalization.",
+    "The source dataset was explored historically before this reconstruction.",
+    "Intervals condition on fixed models and class counts; they exclude training and selection uncertainty.",
+    "Segment results are descriptive, overlap and have no multiple-comparison correction.",
+    "Calibration was assessed, not fitted; probability quality is not validated for individual decisions.",
+    "Competition metric variant and leaderboard placement remain unverified.",
+    "This study is not validated for determining visa eligibility or automating immigration decisions."
+  ]
+}
