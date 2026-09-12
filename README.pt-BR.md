@@ -2,24 +2,24 @@
 
 [English](README.md) | **Português**
 
-Estudo reproduzível de classificação desenvolvido a partir do projeto da competição Kaggle **ML Olympiad for Students — TopVistos EUA**, de 2023. A implementação atual separa treino, validação e teste final reservado, ajusta o pré-processamento dentro de cada fold de treino e compara baselines fixos.
+Estudo reproduzível de classificação desenvolvido a partir do projeto da competição Kaggle **ML Olympiad for Students — TopVistos EUA**, de 2023. A implementação atual separa treino, validação e teste final reservado, ajusta o pré-processamento dentro de cada fold de treino e compara um conjunto limitado de modelos com seleção explícita do limiar.
 
 ## Resultados até aqui
 
-Em **3.567 casos de validação**, a regressão logística alcança **0,681 de F1 macro** e **0,769 de ROC-AUC**, contra 0,401 e 0,500 do baseline baseado na frequência das classes. São resultados de desenvolvimento; o teste final ainda não foi avaliado.
+O gradient boosting selecionado alcança **0,710 de F1 macro** em **3.567 casos de validação**, com limiar de aprovação de **0,60**. A seleção do modelo usou validação cruzada em cinco folds no treino; a escolha do limiar usou a validação. **Esses resultados de desenvolvimento têm viés de seleção; o teste final ainda não foi avaliado.**
 
-| Métrica de validação | Baseline de frequência | Regressão logística |
+| Métrica de validação | Baseline logístico, 0,50 | Boosting escolhido, 0,60 |
 |---|---:|---:|
-| F1 macro | 0,401 | 0,681 |
-| F1 — classe aprovada | 0,802 | 0,824 |
-| ROC-AUC | 0,500 | 0,769 |
-| Recall — classe negada | 0,000 | 0,448 |
+| F1 macro | 0,681 | 0,710 |
+| F1 — classe aprovada | 0,824 | 0,813 |
+| ROC-AUC | 0,769 | 0,776 |
+| Recall — classe negada | 0,448 | 0,590 |
 
-O baseline prevê aprovação para todos os casos. Seu F1 de 0,802 para a classe aprovada mostra por que essa métrica isolada oferece uma visão incompleta. A regressão logística ainda deixa de identificar 651 dos 1.180 casos negados, com limiar fixo de 0,5.
+No boosting selecionado, elevar o limiar de 0,50 para 0,60 identificou 113 negativas adicionais e classificou 121 casos aprovados adicionais como negados. O [relatório de seleção](docs/SELECTION.pt-BR.md) explica essa troca, as sete configurações candidatas e a decisão congelada.
 
-![Comparação dos baselines na validação](docs/baseline/validation-baselines.png)
+![Comparação de modelos e efeito do limiar](docs/selection/selection.png)
 
-O [relatório do experimento](docs/BASELINE.pt-BR.md) apresenta protocolo, validação cruzada, matriz de confusão e limitações. Os [resultados em JSON](docs/baseline/metrics.json) incluem hashes dos dados, código e partições.
+O [relatório original dos baselines](docs/BASELINE.pt-BR.md) continua disponível, incluindo o baseline de frequência que prevê aprovação para todos os casos. Os [resultados da seleção em JSON](docs/selection/metrics.json) e os [resultados dos baselines em JSON](docs/baseline/metrics.json) registram os experimentos separadamente.
 
 ## Reproduzir o experimento
 
@@ -32,6 +32,7 @@ py -3.11 -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements-lock.txt
 .venv/Scripts/python.exe -m unittest discover -s tests -v
 .venv/Scripts/python.exe -m topvistos.baseline
+.venv/Scripts/python.exe -m topvistos.selection
 ```
 
 Linux/macOS:
@@ -41,11 +42,12 @@ python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m unittest discover -s tests -v
 .venv/bin/python -m topvistos.baseline
+.venv/bin/python -m topvistos.selection
 ```
 
 Obtenha os [dados necessários](data/README.pt-BR.md) e coloque-os em `data/raw/` antes de executar o experimento. O baseline exige o hash registrado do `train.csv`. Os testes usam dados sintéticos e dispensam os arquivos da competição. A integração contínua instala as dependências fixadas e executa os testes no Linux.
 
-As saídas ficam em `reports/generated/baseline/`: métricas, gráfico, identificadores das partições e pipelines treinados. Essa pasta é ignorada pelo Git; somente resultados agregados e o gráfico são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
+As saídas ficam em `reports/generated/baseline/` e `reports/generated/selection/`: métricas, gráficos, modelos locais e decisão selecionada. Essas pastas são ignoradas pelo Git; somente resultados agregados, metadados da decisão e gráficos são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
 
 ## Decisões de implementação
 
@@ -59,7 +61,7 @@ As saídas ficam em `reports/generated/baseline/`: métricas, gráfico, identifi
 
 O estudo modela o rótulo histórico `status_do_caso`: `Aprovado=1`, `Negado=0`. Não foi validado para determinar elegibilidade a vistos ou automatizar decisões de imigração. F1 macro é um critério interno de desenvolvimento; a variante oficial de F1 e o resultado no ranking da competição permanecem sem verificação.
 
-Próximo passo: comparar poucos modelos candidatos, selecionar eventual limiar nos dados de desenvolvimento e então avaliar o teste reservado e os erros por segmentos relevantes. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
+A seleção de modelo e limiar está concluída. Próximo passo: avaliar o pipeline e o limiar congelados no teste reservado, examinar calibração e os erros por segmentos relevantes. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
 
 ## Trabalho histórico e fonte dos dados
 

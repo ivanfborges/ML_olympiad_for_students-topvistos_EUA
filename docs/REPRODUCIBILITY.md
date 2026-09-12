@@ -31,7 +31,7 @@ The historical outputs record 17,836 labeled rows and 7,644 submission rows. Loc
 
 ## Reconstruction progress
 
-Data inspection and the fixed-baseline delivery are complete. The new implementation uses fold-local preprocessing, correct metric inputs, and separate training, validation, and reserved final-holdout partitions. See the [baseline report](BASELINE.md) for measured results. Candidate selection and final evaluation remain pending.
+Data inspection and the fixed-baseline delivery are complete. The new implementation uses fold-local preprocessing, correct metric inputs, and separate training, validation, and reserved final-holdout partitions. See the [baseline report](BASELINE.md) for measured results. Model and threshold selection are now complete; see the [selection report](SELECTION.md). Final evaluation remains pending.
 
 The original notebook remains unchanged so future comparisons can distinguish historical code from the reconstructed version.
 

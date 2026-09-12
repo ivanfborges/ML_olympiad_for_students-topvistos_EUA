@@ -31,7 +31,7 @@ As saídas históricas registram 17.836 linhas rotuladas e 7.644 linhas de submi
 
 ## Andamento da reconstrução
 
-A inspeção dos dados e a entrega dos baselines fixos estão concluídas. A nova implementação ajusta o pré-processamento dentro dos folds, corrige as entradas das métricas e separa treino, validação e teste final reservado. Veja os resultados medidos no [relatório do baseline](BASELINE.pt-BR.md). Seleção de candidatos e avaliação final continuam pendentes.
+A inspeção dos dados e a entrega dos baselines fixos estão concluídas. A nova implementação ajusta o pré-processamento dentro dos folds, corrige as entradas das métricas e separa treino, validação e teste final reservado. Veja os resultados medidos no [relatório do baseline](BASELINE.pt-BR.md). A seleção de modelo e limiar está concluída; veja o [relatório de seleção](SELECTION.pt-BR.md). A avaliação final continua pendente.
 
 O notebook original permanece intacto para permitir distinguir o código histórico da versão reconstruída.
 
