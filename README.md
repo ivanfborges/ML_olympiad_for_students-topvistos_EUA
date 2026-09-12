@@ -1,51 +1,42 @@
-# ML_olympiad_for_students-topvistos_EUA
-Preveja a aprovação de vistos de trabalho dos EUA nessa competição de Machine Learning proposta pelo Kaggle. Será que você acerta?
+# TopVistos EUA — Visa Outcome Classification
 
-Description
-Contexto:
-As comunidades empresariais nos Estados Unidos enfrentam uma alta demanda por recursos humanos, mas um dos desafios constantes é identificar e atrair o talento certo, que é talvez o elemento mais importante para se manter competitivo. Empresas nos Estados Unidos procuram indivíduos trabalhadores, talentosos e qualificados tanto localmente quanto no exterior.
+**English** | [Português](README.pt-BR.md)
 
-A Lei de Imigração e Nacionalidade (INA) dos EUA permite que trabalhadores estrangeiros venham trabalhar nos Estados Unidos temporária ou permanentemente. A lei também protege os trabalhadores americanos contra impactos adversos em seus salários ou condições de trabalho, garantindo que os empregadores americanos cumpram os requisitos legais ao contratar trabalhadores estrangeiros para suprir a escassez de mão de obra. Os programas de imigração são administrados pelo Escritório de Certificação de Trabalho Estrangeiro (OFLC).
+A learning project from the 2023 **ML Olympiad for Students — TopVistos EUA** Kaggle competition. The original notebook explores tabular application data, compares classifiers, tunes a gradient-boosting model, and generates submission predictions.
 
-O OFLC processa pedidos de certificação de emprego para empregadores que buscam trazer trabalhadores estrangeiros para os Estados Unidos e concede certificações nos casos em que os empregadores podem demonstrar que não há trabalhadores americanos suficientes disponíveis para realizar o trabalho com salários que atendam ou excedam o salário pago para a ocupação na área de emprego pretendida.
+## Current status
 
-Objetivo:
-No ano fiscal de 2016, o OFLC processou 775.979 pedidos de empregadores para 1.699.957 posições de certificações de trabalho temporárias e permanentes. Isso representou um aumento de nove por cento no número total de pedidos processados em relação ao ano anterior. O processo de revisar cada caso está se tornando uma tarefa tediosa à medida que o número de candidatos aumenta a cada ano.
+The original notebook is preserved as historical work. A reproducibility and evaluation review is in progress; **no new model has been trained or independently evaluated as part of this review**.
 
-O aumento do número de candidatos a cada ano demanda uma solução baseada em Aprendizado de Máquina que possa ajudar na pré-seleção dos candidatos com maiores chances de aprovação de VISTO. O OFLC contratou sua empresa, TopVistos, para soluções baseadas em dados. Como Cientista de Dados, você deve analisar os dados fornecidos e, com a ajuda de um modelo de classificação:
+The repository currently contains the notebook, documentation, and a reconstruction plan. The competition CSV files and a verified training environment are not included. The notebook's stored outputs are historical observations, not a newly reproduced benchmark or a verified leaderboard score.
 
-Facilitar o processo de aprovação de vistos.
+## What to explore
 
-Recomendar um perfil adequado para os candidatos para os quais o visto deve ser certificado ou negado, com base nos fatores que influenciam significativamente o status do caso.
+- [Original notebook (Portuguese)](ml-olympiad_top-vistos-eua_solucao.ipynb): data exploration, preprocessing, model comparison, tuning, and submission generation.
+- [Reproducibility audit and next steps](docs/REPRODUCIBILITY.md): issues found in the historical version and the criteria for a reliable replacement.
+- [Data preparation](data/README.md): required input files and how to organize them locally.
+- [Original competition description (Portuguese)](docs/competition-description.pt-BR.md): the description previously published in this repository.
 
-Avaliação
-F1-Score
-A métrica de avaliação para esta competição é a Média do F1-Score. O F1-Score, comumente usado em problemas de classificação, mede a taxa de acertos utilizando as estatísticas de Precisão (p) e Recall (r).
+## Problem and scope
 
-A precisão é a razão dos verdadeiros positivos, ouTrue Positives (tp),
-para todos os positivos previstos (tp + fp).
+The competition uses a binary target, `status_do_caso`, and the identifier `id_do_caso`. The historical training notebook maps `Aprovado` to 1 and `Negado` to 0.
 
-O Recall é a razão dos verdadeiros positivos (tp) para todos os positivos reais (tp + fn).
+This is a study of classification on historical data. It is not a validated system for determining visa eligibility or automating immigration decisions. Evaluation must examine data limitations and differences in errors across relevant groups.
 
-O F1 score é dado por:
+## Planned reconstruction
 
+1. Identify the original datasets, record their provenance and hashes, and establish a clean environment.
+2. Put preprocessing inside the training pipeline and reserve a final test partition.
+3. Compare simple baselines with a small number of candidate models.
+4. Select hyperparameters and any decision threshold using development data only.
+5. Report final evaluation, segment-level errors, limitations, and reproducible inference.
 
-A métrica F1 pondera igualmente o Recall e a Precisão, e um bom algoritmo de classificação maximizará simultaneamente a precisão e o recall. Assim, um desempenho moderadamente bom em ambos será favorecido em relação a um desempenho extremamente bom em um e um desempenho ruim no outro.
+These are planned deliverables, not implemented functionality. The audit documents the boundary between the current notebook and the intended replacement.
 
-Nota: Para maiores informações sobre métricas de performance em modelos de classificação, como o F1-Score, leia o seguinte artigo: https://brains.dev/2023/medidas-de-performance-modelos-de-classificacao/
+## Source and attribution
 
-Formato do Envio
-Para cada observação, ou cada aplicação de visto analisada, o arquivo a ser enviado deve conter duas colunas: id_do_caso e status_do_caso.
+André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), Kaggle.
 
-status_do_caso é sua coluna alvo, a ser prevista pelo modelo. A plataforma irá analisar a sua taxa de acerto de acordo com as previsões do seu modelo nesta coluna.
+[Competition](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua)
 
-id_do_caso é a chave primária, identificador único de cada observação. É importante manter essa coluna como primeira do seu arquivo a ser enviado, para que a plataforma saiba que cada predição corresponde a cada observação.
-
-É muito importante manter esta estrutura do arquivo para que o seu modelo seja avaliado corretamente pela plataforma. Note que a coluna alvo (status_do_caso) precisa de um enconding para 0 e 1, onde 0 é um visto "Negado" e 1 um visto "Aprovado".
-
-O arquivo deve manter o seu cabeçalho (header) e deve ter o seguinte formato:
-
-id_do_caso,status_do_caso
-EZYV0x,0
-Citation
-Andre Lopes. (2023). ML Olympiad for Students - TopVistos EUA. Kaggle. https://kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua
+Obtain the original files through an authorized source and observe the competition's access and reuse conditions. Dataset access and the exact competition scoring configuration must be confirmed before the new evaluation.

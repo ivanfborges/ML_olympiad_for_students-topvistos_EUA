@@ -1,0 +1,12 @@
+.venv/
+.env
+.env.*
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+data/raw/
+reports/generated/
+artifacts/
+submission.csv
+kaggle.json

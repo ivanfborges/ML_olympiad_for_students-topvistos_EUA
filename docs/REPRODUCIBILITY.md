@@ -1,0 +1,38 @@
+# Reproducibility audit
+
+**English** | [Português](REPRODUCIBILITY.pt-BR.md)
+
+Reviewed on 2026-09-12 against commit `626ae2d4cf12379817d7443c0624ca4d5fd0fb2d`. This is a static audit, not a rerun.
+
+The original notebook has 41 cells, including 32 code cells. Its metadata records Python 3.10.10; dependency versions are not recorded in a lockfile. The repository did not contain the three competition CSVs at the time of this audit.
+
+Cell indices below are zero-based positions in the notebook JSON, so they do not depend on saved execution counters.
+
+| Cell(s) | Finding | Required correction |
+|---|---|---|
+| 3, 33 | Loading `df_test` is commented out, but the variable is used later. Paths depend on the Kaggle filesystem. | Explicit file inputs and execution from a clean interpreter. |
+| 16, 38 | Category encoders are fitted on the full labeled dataset and fitted again on submission data. | Learn preprocessing on training folds and reuse the same fitted transformer for evaluation and inference; handle unseen categories. |
+| 19 | The 70/30 random split is not stratified. | Define a split appropriate to available labels/entities and the intended use; document assumptions. |
+| 21 | The comparison passes predictions before ground truth to precision/recall; `model_test(x, y)` ignores its arguments in favor of global split variables. | Correct metric argument order and use explicit inputs. The argument inversion alone does not change binary F1 or accuracy. |
+| 21–30 | The partition named `X_test` informs model comparison and parameter inspection. | Treat development data separately from a reserved final test set. |
+| 25 | ROC-AUC receives hard labels. | Evaluate ranking using probabilities or decision scores. |
+| 30 | Grid search optimizes accuracy, whereas the historical description mentions F1. | Confirm the official F1 variant and align model selection with the declared objective. |
+
+## Data and environment gates
+
+Before training a replacement:
+- acquire the original `train.csv`, `test.csv`, and `sample_submission.csv`;
+- record source, download date, hashes, schema, row counts, and ID uniqueness;
+- verify train/submission ID separation and sample-submission correspondence;
+- distinguish raw target labels from the submission encoding;
+- specify and validate the environment from a clean installation.
+
+The historical outputs record 17,836 labeled rows and 7,644 submission rows. These counts help identify the files, but have not been checked against a fresh download.
+
+## Scope of the next delivery
+
+Prepare data validation and the baseline environment first. Then implement fold-local preprocessing and development/final-test boundaries. Do not claim improved scores until the experiment is run and documented.
+
+The original notebook remains unchanged so future comparisons can distinguish historical code from the reconstructed version.
+
+References: [scikit-learn common pitfalls](https://scikit-learn.org/stable/common_pitfalls.html), [ROC-AUC](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html).
