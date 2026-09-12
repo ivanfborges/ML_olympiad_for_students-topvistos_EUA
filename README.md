@@ -2,58 +2,70 @@
 
 **English** | [Português](README.pt-BR.md)
 
-A learning project from the 2023 **ML Olympiad for Students — TopVistos EUA** Kaggle competition. The original notebook explores tabular application data, compares classifiers, tunes a gradient-boosting model, and generates submission predictions.
+A reproducible classification study built from the 2023 **ML Olympiad for Students — TopVistos EUA** Kaggle project. The current implementation separates training, validation, and a reserved final holdout, fits preprocessing inside each training fold, and compares fixed baselines.
 
-## Current status
+## Results so far
 
-The original notebook is preserved as historical work. A reproducibility and evaluation review is in progress; **no new model has been trained or independently evaluated as part of this review**.
+On **3,567 validation cases**, logistic regression achieves **0.681 macro F1** and **0.769 ROC-AUC**, compared with 0.401 and 0.500 for a class-prior baseline. These are development results; the final holdout has not been evaluated.
 
-The repository currently contains the notebook, documentation, a tested data inspector, an aggregate data manifest, and a reconstruction plan. The competition CSV files and a verified training environment are not included. The notebook's stored outputs are historical observations, not a newly reproduced benchmark or a verified leaderboard score.
+| Validation metric | Prior baseline | Logistic regression |
+|---|---:|---:|
+| Macro F1 | 0.401 | 0.681 |
+| F1 — approved class | 0.802 | 0.824 |
+| ROC-AUC | 0.500 | 0.769 |
+| Recall — denied class | 0.000 | 0.448 |
 
-## What to explore
+The prior baseline predicts approval for every case. Its approved-class F1 of 0.802 shows why that metric alone gives an incomplete picture. Logistic regression still misses 651 of 1,180 denied cases at the fixed 0.5 threshold.
 
-- [Original notebook (Portuguese)](ml-olympiad_top-vistos-eua_solucao.ipynb): data exploration, preprocessing, model comparison, tuning, and submission generation.
-- [Reproducibility audit and next steps](docs/REPRODUCIBILITY.md): issues found in the historical version and the criteria for a reliable replacement.
-- [Data preparation](data/README.md): required input files and how to organize them locally.
-- [Original competition description (Portuguese)](docs/competition-description.pt-BR.md): the description previously published in this repository.
+![Validation comparison of fixed baselines](docs/baseline/validation-baselines.png)
 
-## Problem and scope
+Read the [experiment report](docs/BASELINE.md) for the protocol, cross-validation results, confusion matrix, and limitations. [Machine-readable results](docs/baseline/metrics.json) include data, source, and partition hashes.
 
-The competition uses a binary target, `status_do_caso`, and the identifier `id_do_caso`. The historical training notebook maps `Aprovado` to 1 and `Negado` to 0.
+## Reproduce the experiment
 
-This is a study of classification on historical data. It is not a validated system for determining visa eligibility or automating immigration decisions. Evaluation must examine data limitations and differences in errors across relevant groups.
+Use a **stable Python 3.11** release. The recorded run used Python 3.11.14 on Windows. Dependencies are pinned in [requirements-lock.txt](requirements-lock.txt). Run these commands from the repository root.
 
-## Planned reconstruction
+Windows PowerShell:
 
-1. Identify the original datasets, record their provenance and hashes, and establish a clean environment.
-2. Put preprocessing inside the training pipeline and reserve a final test partition.
-3. Compare simple baselines with a small number of candidate models.
-4. Select hyperparameters and any decision threshold using development data only.
-5. Report final evaluation, segment-level errors, limitations, and reproducible inference.
-
-These are planned deliverables, not implemented functionality. The audit documents the boundary between the current notebook and the intended replacement.
-
-## Source and attribution
-
-André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), Kaggle.
-
-[Competition](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua)
-
-Obtain the original files through an authorized source and observe the competition's access and reuse conditions. Dataset access and the exact competition scoring configuration must be confirmed before the new evaluation.
-
-## Validate local data
-
-Python 3.11 and its standard library are sufficient for this inspection; no third-party packages are required.
-
-Place the files in data/raw/ and run from the repository root:
-
-```text
-python scripts/inspect_data.py --output reports/generated/data-manifest.json
-python -m unittest discover -s tests -v
+```powershell
+py -3.11 -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-lock.txt
+.venv/Scripts/python.exe -m unittest discover -s tests -v
+.venv/Scripts/python.exe -m topvistos.baseline
 ```
 
-The [inspector](scripts/inspect_data.py) checks column structure, target encoding, and identifiers. The [tests](tests/test_inspect_data.py) cover invalid inputs and the distinction between an example submission and a complete template.
+Linux/macOS:
 
-On 2026-09-12, the author supplied local files with 17,836 training rows and 7,644 competition-test rows. Their identifiers are unique and disjoint. The sample submission has only 10 rows; six IDs are absent from test.csv. Use it as a format example, not a complete submission template.
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python -m topvistos.baseline
+```
 
-Seven tests passed. The [manifest](docs/data-manifest.json) contains hashes and aggregate checks, not individual records. Original download provenance has not been independently verified. No new model scores are reported.
+Obtain the [required data](data/README.md) and place it in `data/raw/` before running the experiment. The baseline requires the recorded `train.csv` hash. The tests use synthetic fixtures and run without competition data. Continuous integration installs the locked dependencies and runs the tests on Linux.
+
+Outputs go to `reports/generated/baseline/`: metrics, a chart, partition identifiers, and fitted pipelines. This directory is ignored by Git; only aggregate results and the chart are curated into the documentation. Load serialized models only from a source you trust.
+
+## Engineering choices
+
+- A deterministic, stratified 60/20/20 split; five-fold cross-validation uses only the training partition.
+- Imputation, scaling, and category encoding are fitted inside the pipeline; inference handles missing values and unseen categories.
+- IDs and the target are excluded from features. Negative employee counts become missing values with an indicator.
+- Precision and recall use the correct argument order; ROC-AUC uses probabilities.
+- Tests cover data integrity, split separation, preprocessing isolation, metrics, serialization, and execution without final-holdout features or labels.
+
+## Scope and next steps
+
+This study models the historical label `status_do_caso`: `Aprovado=1`, `Negado=0`. It is not validated for visa eligibility or automated immigration decisions. Macro F1 is an internal development criterion; the official competition F1 variant and leaderboard result remain unverified.
+
+Next: compare a small number of candidate models, select any threshold on development data, then evaluate the reserved holdout and errors across relevant segments. The original dataset was explored in the historical notebook, so the reserved partition is not new external evidence. Current scores are not directly comparable with that notebook's different split.
+
+## Historical work and data source
+
+- [Original notebook (Portuguese)](ml-olympiad_top-vistos-eua_solucao.ipynb), preserved unchanged.
+- [Reproducibility audit](docs/REPRODUCIBILITY.md).
+- [Aggregate data manifest](docs/data-manifest.json).
+- [Original competition description (Portuguese)](docs/competition-description.pt-BR.md).
+
+André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), [Kaggle](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua). The author supplied local files matching the historical row counts; original download provenance has not been independently verified. Raw data is not redistributed.

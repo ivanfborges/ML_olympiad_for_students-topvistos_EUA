@@ -29,9 +29,9 @@ Antes de treinar a nova versão:
 
 As saídas históricas registram 17.836 linhas rotuladas e 7.644 linhas de submissão. Os arquivos locais fornecidos pelo autor em 12/09/2026 correspondem a essas contagens; isso não é uma verificação independente contra um novo download oficial.
 
-## Próxima entrega
+## Andamento da reconstrução
 
-Preparar primeiro a validação dos dados e o ambiente do baseline. Depois, implementar pré-processamento dentro dos folds e as fronteiras entre desenvolvimento e teste final. Não apresentar ganhos antes da execução e documentação do experimento.
+A inspeção dos dados e a entrega dos baselines fixos estão concluídas. A nova implementação ajusta o pré-processamento dentro dos folds, corrige as entradas das métricas e separa treino, validação e teste final reservado. Veja os resultados medidos no [relatório do baseline](BASELINE.pt-BR.md). Seleção de candidatos e avaliação final continuam pendentes.
 
 O notebook original permanece intacto para permitir distinguir o código histórico da versão reconstruída.
 
@@ -41,4 +41,4 @@ Referências: [boas práticas do scikit-learn](https://scikit-learn.org/stable/c
 
 O [manifesto dos dados](data-manifest.json) registra os arquivos fornecidos e seus hashes. A validação estrutural e sete testes isolados passaram. O exemplo de submissão está incompleto e inclui IDs fora do teste; submissões futuras devem usar os identificadores do arquivo de teste.
 
-Os dados estão disponíveis localmente e excluídos do Git. Um ambiente limpo de treinamento e um baseline reproduzido ainda estão pendentes. Avaliação estatística e validação numérica das variáveis entram no próximo passo.
+Os dados continuam locais e excluídos do Git. O novo baseline foi executado em ambiente isolado com Python 3.11.14 e dependências fixadas. Os 17 testes passaram. A validação numérica e o tratamento de quantidades negativas de empregados estão implementados no pipeline. O teste final ainda não foi avaliado.

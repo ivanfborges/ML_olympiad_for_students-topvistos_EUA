@@ -2,58 +2,70 @@
 
 [English](README.md) | **Português**
 
-Projeto de aprendizado da competição **ML Olympiad for Students — TopVistos EUA**, realizada no Kaggle em 2023. O notebook original explora dados tabulares de solicitações, compara classificadores, ajusta um modelo de gradient boosting e gera previsões para submissão.
+Estudo reproduzível de classificação desenvolvido a partir do projeto da competição Kaggle **ML Olympiad for Students — TopVistos EUA**, de 2023. A implementação atual separa treino, validação e teste final reservado, ajusta o pré-processamento dentro de cada fold de treino e compara baselines fixos.
 
-## Situação atual
+## Resultados até aqui
 
-O notebook original está preservado como registro histórico. A revisão de reprodução e avaliação está em andamento; **nenhum novo modelo foi treinado ou avaliado de forma independente nesta revisão**.
+Em **3.567 casos de validação**, a regressão logística alcança **0,681 de F1 macro** e **0,769 de ROC-AUC**, contra 0,401 e 0,500 do baseline baseado na frequência das classes. São resultados de desenvolvimento; o teste final ainda não foi avaliado.
 
-O repositório contém o notebook, a documentação, um validador de dados com testes, um manifesto agregado e o plano de reconstrução. Os CSVs da competição e um ambiente de treinamento verificado não estão incluídos. As saídas salvas no notebook são observações históricas, não um benchmark recém-reproduzido ou uma pontuação verificada no ranking.
+| Métrica de validação | Baseline de frequência | Regressão logística |
+|---|---:|---:|
+| F1 macro | 0,401 | 0,681 |
+| F1 — classe aprovada | 0,802 | 0,824 |
+| ROC-AUC | 0,500 | 0,769 |
+| Recall — classe negada | 0,000 | 0,448 |
 
-## Por onde começar
+O baseline prevê aprovação para todos os casos. Seu F1 de 0,802 para a classe aprovada mostra por que essa métrica isolada oferece uma visão incompleta. A regressão logística ainda deixa de identificar 651 dos 1.180 casos negados, com limiar fixo de 0,5.
 
-- [Notebook original em português](ml-olympiad_top-vistos-eua_solucao.ipynb): exploração, pré-processamento, comparação de modelos, ajuste e submissão.
-- [Auditoria de reprodução e próximos passos](docs/REPRODUCIBILITY.pt-BR.md): problemas identificados e critérios para a nova versão.
-- [Preparação dos dados](data/README.pt-BR.md): arquivos necessários e organização local.
-- [Descrição original da competição](docs/competition-description.pt-BR.md): texto anteriormente publicado neste repositório.
+![Comparação dos baselines na validação](docs/baseline/validation-baselines.png)
 
-## Problema e escopo
+O [relatório do experimento](docs/BASELINE.pt-BR.md) apresenta protocolo, validação cruzada, matriz de confusão e limitações. Os [resultados em JSON](docs/baseline/metrics.json) incluem hashes dos dados, código e partições.
 
-A competição usa o alvo binário `status_do_caso` e o identificador `id_do_caso`. O notebook histórico mapeia `Aprovado` para 1 e `Negado` para 0 no treinamento.
+## Reproduzir o experimento
 
-Este é um estudo de classificação de dados históricos. Não é um sistema validado para determinar elegibilidade de vistos ou automatizar decisões de imigração. A avaliação deve considerar limitações dos dados e diferenças dos erros entre grupos relevantes.
+Use uma versão **estável do Python 3.11**. A execução registrada usou Python 3.11.14 no Windows. As dependências estão fixadas em [requirements-lock.txt](requirements-lock.txt). Execute os comandos na raiz do repositório.
 
-## Reconstrução planejada
+Windows PowerShell:
 
-1. Identificar as bases originais, registrar sua origem e hashes e estabelecer um ambiente limpo.
-2. Integrar o pré-processamento ao pipeline de treinamento e reservar uma partição final de teste.
-3. Comparar referências simples com poucos modelos candidatos.
-4. Selecionar hiperparâmetros e eventual limiar usando apenas dados de desenvolvimento.
-5. Apresentar avaliação final, erros por segmento, limitações e inferência reproduzível.
-
-São entregas planejadas, ainda não implementadas. A auditoria distingue o notebook atual da nova versão pretendida.
-
-## Fonte e atribuição
-
-André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), Kaggle.
-
-[Competição](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua)
-
-Obtenha os arquivos originais por uma fonte autorizada e observe as condições de acesso e reutilização da competição. O acesso aos dados e a configuração exata da métrica oficial precisam ser confirmados antes da nova avaliação.
-
-## Validar os dados locais
-
-Python 3.11 e sua biblioteca padrão são suficientes para esta inspeção; não são necessários pacotes adicionais.
-
-Coloque os arquivos em data/raw/ e execute na raiz do repositório:
-
-```text
-python scripts/inspect_data.py --output reports/generated/data-manifest.json
-python -m unittest discover -s tests -v
+```powershell
+py -3.11 -m venv .venv
+.venv/Scripts/python.exe -m pip install -r requirements-lock.txt
+.venv/Scripts/python.exe -m unittest discover -s tests -v
+.venv/Scripts/python.exe -m topvistos.baseline
 ```
 
-O [validador](scripts/inspect_data.py) confere estrutura de colunas, codificação do alvo e identificadores. Os [testes](tests/test_inspect_data.py) cobrem entradas inválidas e a distinção entre exemplo de submissão e modelo completo.
+Linux/macOS:
 
-Em 12/09/2026, o autor forneceu arquivos locais com 17.836 linhas de treino e 7.644 de teste da competição. Os identificadores são únicos e não se sobrepõem. O exemplo de submissão tem apenas dez linhas; seis IDs não estão no test.csv. Use-o como exemplo de formato, não como modelo completo de submissão.
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python -m topvistos.baseline
+```
 
-Sete testes passaram. O [manifesto](docs/data-manifest.json) contém hashes e verificações agregadas, sem registros individuais. A origem do download não foi verificada de forma independente. Não são apresentados novos escores de modelos.
+Obtenha os [dados necessários](data/README.pt-BR.md) e coloque-os em `data/raw/` antes de executar o experimento. O baseline exige o hash registrado do `train.csv`. Os testes usam dados sintéticos e dispensam os arquivos da competição. A integração contínua instala as dependências fixadas e executa os testes no Linux.
+
+As saídas ficam em `reports/generated/baseline/`: métricas, gráfico, identificadores das partições e pipelines treinados. Essa pasta é ignorada pelo Git; somente resultados agregados e o gráfico são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
+
+## Decisões de implementação
+
+- Divisão determinística e estratificada 60/20/20; a validação cruzada em cinco folds usa somente a partição de treino.
+- Imputação, escala e codificação de categorias ajustadas dentro do pipeline; inferência aceita valores ausentes e categorias desconhecidas.
+- IDs e alvo ficam fora das variáveis. Quantidades negativas de empregados viram valores ausentes com um indicador.
+- Precisão e recall usam a ordem correta dos argumentos; ROC-AUC usa probabilidades.
+- Testes cobrem integridade dos dados, separação das partições, isolamento do pré-processamento, métricas, serialização e execução sem variáveis ou rótulos do teste final.
+
+## Escopo e próximos passos
+
+O estudo modela o rótulo histórico `status_do_caso`: `Aprovado=1`, `Negado=0`. Não foi validado para determinar elegibilidade a vistos ou automatizar decisões de imigração. F1 macro é um critério interno de desenvolvimento; a variante oficial de F1 e o resultado no ranking da competição permanecem sem verificação.
+
+Próximo passo: comparar poucos modelos candidatos, selecionar eventual limiar nos dados de desenvolvimento e então avaliar o teste reservado e os erros por segmentos relevantes. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
+
+## Trabalho histórico e fonte dos dados
+
+- [Notebook original (português)](ml-olympiad_top-vistos-eua_solucao.ipynb), preservado intacto.
+- [Auditoria de reprodução](docs/REPRODUCIBILITY.pt-BR.md).
+- [Manifesto agregado dos dados](docs/data-manifest.json).
+- [Descrição original da competição (português)](docs/competition-description.pt-BR.md).
+
+André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), [Kaggle](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua). O autor forneceu arquivos locais com as contagens históricas de linhas; a origem do download não foi verificada independentemente. Os dados brutos não são redistribuídos.

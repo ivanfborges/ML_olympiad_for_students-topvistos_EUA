@@ -16,7 +16,7 @@ A pasta de dados brutos é ignorada pelo Git. Este repositório não redistribui
 
 Se os arquivos originais estiverem indisponíveis, registre essa limitação antes de escolher outra base. Uma base semelhante não comprova reprodução do resultado da competição.
 
-Próximo passo: validar origem, esquema, IDs, rótulos e hashes antes de instalar e executar o novo ambiente de treinamento.
+Esquema, IDs, rótulos e hashes foram conferidos nos arquivos fornecidos. A origem do download segue sem verificação independente. Siga as [instruções de treinamento](../README.pt-BR.md) para reproduzir o baseline implementado.
 
 ## Arquivos fornecidos
 

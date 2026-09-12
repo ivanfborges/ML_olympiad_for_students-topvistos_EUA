@@ -16,7 +16,7 @@ The raw directory is ignored by Git. Files are not redistributed by this reposit
 
 If the original files are unavailable, record that limitation before selecting a replacement dataset. A similar dataset is not evidence that the original competition result has been reproduced.
 
-Next step: validate provenance, schema, IDs, target values, and file hashes before installing and running the new training environment.
+Schema, IDs, target values, and file hashes have been checked for the supplied files. Original download provenance remains unverified. Follow the [training instructions](../README.md) to reproduce the implemented baseline.
 
 ## Supplied files
 

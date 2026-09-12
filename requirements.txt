@@ -1,0 +1,8 @@
+# Direct dependencies of the reconstructed baseline (Python 3.11).
+# Use requirements-lock.txt for the complete tested environment.
+numpy==2.4.6
+pandas==3.0.5
+scikit-learn==1.9.1
+matplotlib==3.11.2
+joblib==1.6.0
+threadpoolctl==3.6.0

@@ -29,9 +29,9 @@ Before training a replacement:
 
 The historical outputs record 17,836 labeled rows and 7,644 submission rows. Local files supplied by the author on 2026-09-12 match these counts; this is not an independent verification against a fresh official download.
 
-## Scope of the next delivery
+## Reconstruction progress
 
-Prepare data validation and the baseline environment first. Then implement fold-local preprocessing and development/final-test boundaries. Do not claim improved scores until the experiment is run and documented.
+Data inspection and the fixed-baseline delivery are complete. The new implementation uses fold-local preprocessing, correct metric inputs, and separate training, validation, and reserved final-holdout partitions. See the [baseline report](BASELINE.md) for measured results. Candidate selection and final evaluation remain pending.
 
 The original notebook remains unchanged so future comparisons can distinguish historical code from the reconstructed version.
 
@@ -41,4 +41,4 @@ References: [scikit-learn common pitfalls](https://scikit-learn.org/stable/commo
 
 The [data manifest](data-manifest.json) records the supplied files and hashes. Structural validation and seven isolated tests passed. The sample submission is incomplete and includes IDs outside the test file, so future submissions must use test-file identifiers.
 
-The data is available locally and excluded from Git. A clean model-training environment and a reproduced baseline are still pending. Statistical evaluation and numerical feature validation belong to the next implementation step.
+The data remains local and excluded from Git. The replacement baseline ran in an isolated Python 3.11.14 environment with pinned dependencies. All 17 tests passed. Numeric feature validation and negative-employee-count handling are implemented in the pipeline. The final holdout has not been evaluated.

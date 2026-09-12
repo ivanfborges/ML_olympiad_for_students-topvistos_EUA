@@ -1,0 +1,222 @@
+{
+  "phase": "development_baseline",
+  "config": {
+    "protocol_version": 1,
+    "seed": 42,
+    "split_fractions": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "cv_folds": 5,
+    "decision_threshold": 0.5,
+    "logistic_C": 1,
+    "primary_development_metric": "f1_macro"
+  },
+  "data_sha256": "db62594bccc14703a0afa5688f89b53bc39f421a536e8c9e40b43d0ecac1715f",
+  "source_sha256": {
+    "configs/baseline.json": "e58625b4763971f262f38bf3c2e02b0a1ca194bd7629e3c6b080a54fbffce1e4",
+    "requirements-lock.txt": "715beb0becffdcaf60717142e8d9fbe566165620a92f00ed158084946c1bf2ab",
+    "scripts/inspect_data.py": "c4f43e6486c9998d8537256df49e040c731da128a769917fe3659b7f40a558d6",
+    "topvistos/data.py": "758b2224c2082439c49a10dd2be54d6e53c74f1e29a850bbea2adbe260bdc46b",
+    "topvistos/modeling.py": "26429d93ca9427834ca9e680318202caceb0115a504338ebc89c3be3faae1394",
+    "topvistos/baseline.py": "d6fb34061b76b38cf4d8b32304b65b171b12f90924df77e13b757f26cbf76ab9"
+  },
+  "environment": {
+    "python": "3.11.14",
+    "system": "Windows",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.17.1",
+      "joblib": "1.6.0",
+      "matplotlib": "3.11.2",
+      "threadpoolctl": "3.6.0"
+    },
+    "numeric_thread_limit": 1
+  },
+  "partitions": {
+    "train": {
+      "rows": 10701,
+      "membership_sha256": "70ef299c9fc5697b920a5d1306ab5d2af2b90d915a061a23408aff72b4eb77d9"
+    },
+    "validation": {
+      "rows": 3567,
+      "membership_sha256": "34792bd491ebed6e3f26049c16bc33896882c1f24d6c1cbf839f1fc635ee17cc"
+    },
+    "holdout": {
+      "rows": 3568,
+      "membership_sha256": "8bcfc7bbb726e244a596b55185f707c72f2bebbf75688b32f671daea5ec803e5"
+    }
+  },
+  "holdout_evaluated": false,
+  "training_data_quality": {
+    "scope": "training partition only",
+    "negative_employee_counts": 13,
+    "missing_feature_cells": 0
+  },
+  "results": {
+    "prior_baseline": {
+      "training_cv": {
+        "f1_macro": {
+          "fold_scores": [
+            0.4009513150531617,
+            0.4008958566629339,
+            0.4008958566629339,
+            0.4008958566629339,
+            0.4010635320458998
+          ],
+          "mean": 0.40094048341757266,
+          "std": 7.285761962807794e-05
+        },
+        "f1_approved": {
+          "fold_scores": [
+            0.8019026301063235,
+            0.8017917133258678,
+            0.8017917133258678,
+            0.8017917133258678,
+            0.8021270640917996
+          ],
+          "mean": 0.8018809668351453,
+          "std": 0.00014571523925615589
+        },
+        "balanced_accuracy": {
+          "fold_scores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "mean": 0.5,
+          "std": 0.0
+        },
+        "roc_auc": {
+          "fold_scores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "mean": 0.5,
+          "std": 0.0
+        }
+      },
+      "validation": {
+        "f1_macro": 0.4009069533087,
+        "f1_approved": 0.8018139066174,
+        "accuracy": 0.6691897953462294,
+        "balanced_accuracy": 0.5,
+        "roc_auc": 0.5,
+        "average_precision_approved": 0.6691897953462294,
+        "brier_score": 0.22137482188345595,
+        "precision_approved": 0.6691897953462294,
+        "recall_approved": 1.0,
+        "precision_denied": 0.0,
+        "recall_denied": 0.0,
+        "confusion_matrix": [
+          [
+            0,
+            1180
+          ],
+          [
+            0,
+            2387
+          ]
+        ],
+        "confusion_matrix_order": [
+          "denied_0",
+          "approved_1"
+        ],
+        "predicted_approval_rate": 1.0
+      }
+    },
+    "logistic_regression": {
+      "training_cv": {
+        "f1_macro": {
+          "fold_scores": [
+            0.6817378827767173,
+            0.6737580733818882,
+            0.6841477804152706,
+            0.6814148054981779,
+            0.6603790304714721
+          ],
+          "mean": 0.6762875145087053,
+          "std": 0.009711556827390373
+        },
+        "f1_approved": {
+          "fold_scores": [
+            0.8204294079375407,
+            0.814621409921671,
+            0.8242149562965361,
+            0.8246292714377821,
+            0.8071778140293638
+          ],
+          "mean": 0.8182145719245788,
+          "std": 0.007361713778682293
+        },
+        "balanced_accuracy": {
+          "fold_scores": [
+            0.6716244613449718,
+            0.6645677492661679,
+            0.6732967995454976,
+            0.6704482687876779,
+            0.6522626392835675
+          ],
+          "mean": 0.6664399836455764,
+          "std": 0.00857996849953069
+        },
+        "roc_auc": {
+          "fold_scores": [
+            0.7636235860921539,
+            0.7683694725878233,
+            0.7749276031310166,
+            0.7948643594356595,
+            0.7631382318772202
+          ],
+          "mean": 0.7729846506247747,
+          "std": 0.013118480111463599
+        }
+      },
+      "validation": {
+        "f1_macro": 0.6807249322493225,
+        "f1_approved": 0.8238482384823849,
+        "accuracy": 0.7448836557331091,
+        "balanced_accuracy": 0.6699003429593916,
+        "roc_auc": 0.7688627665390924,
+        "average_precision_approved": 0.8586584416471996,
+        "brier_score": 0.17788705159694795,
+        "precision_approved": 0.7657430730478589,
+        "recall_approved": 0.8914956011730205,
+        "precision_denied": 0.6713197969543148,
+        "recall_denied": 0.4483050847457627,
+        "confusion_matrix": [
+          [
+            529,
+            651
+          ],
+          [
+            259,
+            2128
+          ]
+        ],
+        "confusion_matrix_order": [
+          "denied_0",
+          "approved_1"
+        ],
+        "predicted_approval_rate": 0.7790860667227362
+      }
+    }
+  },
+  "limitations": [
+    "Metrics are development results, not final-test scores or a Kaggle leaderboard result.",
+    "Macro F1 is an internal criterion; the official competition F1 variant is unverified.",
+    "A random case split assumes exchangeable cases; no temporal or employer-group holdout is available.",
+    "The source dataset was explored historically; the holdout is reserved within this reconstruction, not new external data.",
+    "Negative employee counts become missing with an indicator; wages retain their original units.",
+    "No hyperparameter or threshold search, calibration, subgroup audit, or deployment validation was performed."
+  ],
+  "serialization_check": "Exact probability equality on three validation rows for each baseline."
+}
