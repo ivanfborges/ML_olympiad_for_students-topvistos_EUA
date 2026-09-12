@@ -1,0 +1,83 @@
+{
+  "scope": "Structural data validation; no model training or evaluation.",
+  "files": {
+    "train.csv": {
+      "sha256": "db62594bccc14703a0afa5688f89b53bc39f421a536e8c9e40b43d0ecac1715f",
+      "bytes": 1332894,
+      "rows": 17836,
+      "columns": [
+        "id_do_caso",
+        "continente",
+        "educacao_do_empregado",
+        "tem_experiencia_de_trabalho",
+        "requer_treinamento_de_trabalho",
+        "num_de_empregados",
+        "ano_de_estabelecimento",
+        "regiao_de_emprego",
+        "salario_prevalecente",
+        "unidade_de_salario",
+        "posicao_em_tempo_integral",
+        "status_do_caso"
+      ],
+      "duplicate_ids": 0,
+      "blank_ids": 0,
+      "blank_cells": 0,
+      "target_counts": {
+        "Aprovado": 11937,
+        "Negado": 5899
+      }
+    },
+    "test.csv": {
+      "sha256": "99276ab95149c1a7cfcb835888e5f1ea2ed8f8c8c982b757a2d585d008c92b74",
+      "bytes": 507872,
+      "rows": 7644,
+      "columns": [
+        "id_do_caso",
+        "continente",
+        "educacao_do_empregado",
+        "tem_experiencia_de_trabalho",
+        "requer_treinamento_de_trabalho",
+        "num_de_empregados",
+        "ano_de_estabelecimento",
+        "regiao_de_emprego",
+        "salario_prevalecente",
+        "unidade_de_salario",
+        "posicao_em_tempo_integral"
+      ],
+      "duplicate_ids": 0,
+      "blank_ids": 0,
+      "blank_cells": 0,
+      "target_counts": {}
+    },
+    "sample_submission.csv": {
+      "sha256": "be6515eefb36681ca240e35e515bfb25a2ed2cd01b81c1180e9ff2a9b022a225",
+      "bytes": 116,
+      "rows": 10,
+      "columns": [
+        "id_do_caso",
+        "status_do_caso"
+      ],
+      "duplicate_ids": 0,
+      "blank_ids": 0,
+      "blank_cells": 0,
+      "target_counts": {
+        "0": 4,
+        "1": 6
+      }
+    }
+  },
+  "warnings": [
+    "The supplied sample submission is not the full test-ID template. Use it only as a format example; generate future predictions from test.csv IDs."
+  ],
+  "relationships": {
+    "train_test_id_overlap": 0,
+    "sample_ids_in_test": 4,
+    "sample_ids_outside_test": 6,
+    "sample_covers_full_test_id_set": false
+  },
+  "limitations": [
+    "Matching historical row counts does not independently establish dataset provenance.",
+    "Checks cover schema, target encoding, and identifiers, not numeric validity or model leakage.",
+    "Competition scoring configuration and data reuse terms have not been independently verified."
+  ]
+}

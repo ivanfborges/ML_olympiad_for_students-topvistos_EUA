@@ -27,7 +27,7 @@ Antes de treinar a nova versão:
 - distinguir rótulos originais da codificação para submissão;
 - especificar e validar o ambiente a partir de uma instalação limpa.
 
-As saídas históricas registram 17.836 linhas rotuladas e 7.644 linhas de submissão. Esses números ajudam a identificar os arquivos, mas não foram conferidos em um novo download.
+As saídas históricas registram 17.836 linhas rotuladas e 7.644 linhas de submissão. Os arquivos locais fornecidos pelo autor em 12/09/2026 correspondem a essas contagens; isso não é uma verificação independente contra um novo download oficial.
 
 ## Próxima entrega
 
@@ -36,3 +36,9 @@ Preparar primeiro a validação dos dados e o ambiente do baseline. Depois, impl
 O notebook original permanece intacto para permitir distinguir o código histórico da versão reconstruída.
 
 Referências: [boas práticas do scikit-learn](https://scikit-learn.org/stable/common_pitfalls.html), [ROC-AUC](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html).
+
+## Recebimento dos dados concluído
+
+O [manifesto dos dados](data-manifest.json) registra os arquivos fornecidos e seus hashes. A validação estrutural e sete testes isolados passaram. O exemplo de submissão está incompleto e inclui IDs fora do teste; submissões futuras devem usar os identificadores do arquivo de teste.
+
+Os dados estão disponíveis localmente e excluídos do Git. Um ambiente limpo de treinamento e um baseline reproduzido ainda estão pendentes. Avaliação estatística e validação numérica das variáveis entram no próximo passo.

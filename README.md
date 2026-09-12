@@ -8,7 +8,7 @@ A learning project from the 2023 **ML Olympiad for Students — TopVistos EUA** 
 
 The original notebook is preserved as historical work. A reproducibility and evaluation review is in progress; **no new model has been trained or independently evaluated as part of this review**.
 
-The repository currently contains the notebook, documentation, and a reconstruction plan. The competition CSV files and a verified training environment are not included. The notebook's stored outputs are historical observations, not a newly reproduced benchmark or a verified leaderboard score.
+The repository currently contains the notebook, documentation, a tested data inspector, an aggregate data manifest, and a reconstruction plan. The competition CSV files and a verified training environment are not included. The notebook's stored outputs are historical observations, not a newly reproduced benchmark or a verified leaderboard score.
 
 ## What to explore
 
@@ -40,3 +40,20 @@ André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), Kaggle.
 [Competition](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua)
 
 Obtain the original files through an authorized source and observe the competition's access and reuse conditions. Dataset access and the exact competition scoring configuration must be confirmed before the new evaluation.
+
+## Validate local data
+
+Python 3.11 and its standard library are sufficient for this inspection; no third-party packages are required.
+
+Place the files in data/raw/ and run from the repository root:
+
+```text
+python scripts/inspect_data.py --output reports/generated/data-manifest.json
+python -m unittest discover -s tests -v
+```
+
+The [inspector](scripts/inspect_data.py) checks column structure, target encoding, and identifiers. The [tests](tests/test_inspect_data.py) cover invalid inputs and the distinction between an example submission and a complete template.
+
+On 2026-09-12, the author supplied local files with 17,836 training rows and 7,644 competition-test rows. Their identifiers are unique and disjoint. The sample submission has only 10 rows; six IDs are absent from test.csv. Use it as a format example, not a complete submission template.
+
+Seven tests passed. The [manifest](docs/data-manifest.json) contains hashes and aggregate checks, not individual records. Original download provenance has not been independently verified. No new model scores are reported.

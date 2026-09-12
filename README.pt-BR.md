@@ -8,7 +8,7 @@ Projeto de aprendizado da competição **ML Olympiad for Students — TopVistos 
 
 O notebook original está preservado como registro histórico. A revisão de reprodução e avaliação está em andamento; **nenhum novo modelo foi treinado ou avaliado de forma independente nesta revisão**.
 
-O repositório contém o notebook, a documentação e o plano de reconstrução. Os CSVs da competição e um ambiente de treinamento verificado não estão incluídos. As saídas salvas no notebook são observações históricas, não um benchmark recém-reproduzido ou uma pontuação verificada no ranking.
+O repositório contém o notebook, a documentação, um validador de dados com testes, um manifesto agregado e o plano de reconstrução. Os CSVs da competição e um ambiente de treinamento verificado não estão incluídos. As saídas salvas no notebook são observações históricas, não um benchmark recém-reproduzido ou uma pontuação verificada no ranking.
 
 ## Por onde começar
 
@@ -40,3 +40,20 @@ André Lopes. *ML Olympiad for Students — TopVistos EUA* (2023), Kaggle.
 [Competição](https://www.kaggle.com/competitions/ml-olympiad-for-students-topvistos-eua)
 
 Obtenha os arquivos originais por uma fonte autorizada e observe as condições de acesso e reutilização da competição. O acesso aos dados e a configuração exata da métrica oficial precisam ser confirmados antes da nova avaliação.
+
+## Validar os dados locais
+
+Python 3.11 e sua biblioteca padrão são suficientes para esta inspeção; não são necessários pacotes adicionais.
+
+Coloque os arquivos em data/raw/ e execute na raiz do repositório:
+
+```text
+python scripts/inspect_data.py --output reports/generated/data-manifest.json
+python -m unittest discover -s tests -v
+```
+
+O [validador](scripts/inspect_data.py) confere estrutura de colunas, codificação do alvo e identificadores. Os [testes](tests/test_inspect_data.py) cobrem entradas inválidas e a distinção entre exemplo de submissão e modelo completo.
+
+Em 12/09/2026, o autor forneceu arquivos locais com 17.836 linhas de treino e 7.644 de teste da competição. Os identificadores são únicos e não se sobrepõem. O exemplo de submissão tem apenas dez linhas; seis IDs não estão no test.csv. Use-o como exemplo de formato, não como modelo completo de submissão.
+
+Sete testes passaram. O [manifesto](docs/data-manifest.json) contém hashes e verificações agregadas, sem registros individuais. A origem do download não foi verificada de forma independente. Não são apresentados novos escores de modelos.
