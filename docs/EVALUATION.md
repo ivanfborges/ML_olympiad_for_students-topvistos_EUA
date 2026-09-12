@@ -60,7 +60,7 @@ These associations concern this historical dataset and fitted model. Groups diff
 
 ## Artifacts and reproduction
 
-The [JSON report](evaluation/metrics.json) records all metrics, intervals, calibration bins, segments, environment and hashes. Tests run with synthetic data; **34 tests passed locally**. GitHub Actions validation is pending publication.
+The [JSON report](evaluation/metrics.json) records all metrics, intervals, calibration bins, segments, environment and hashes. Tests run with synthetic data; **34 tests passed locally and in [GitHub Actions](https://github.com/ivanfborges/ML_olympiad_for_students-topvistos_EUA/actions/runs/34721389624)**.
 
 Follow the [environment instructions](../README.md). With the recorded frozen artifacts in the default generated directories:
 

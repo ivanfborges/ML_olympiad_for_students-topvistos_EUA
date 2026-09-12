@@ -60,7 +60,7 @@ Essas associações se referem a esta base histórica e ao modelo ajustado. Os g
 
 ## Artefatos e reprodução
 
-O [relatório JSON](evaluation/metrics.json) registra métricas, intervalos, faixas de calibração, segmentos, ambiente e hashes. Os testes usam dados sintéticos; **34 testes passaram localmente**. A validação pelo GitHub Actions depende da publicação.
+O [relatório JSON](evaluation/metrics.json) registra métricas, intervalos, faixas de calibração, segmentos, ambiente e hashes. Os testes usam dados sintéticos; **34 testes passaram localmente e no [GitHub Actions](https://github.com/ivanfborges/ML_olympiad_for_students-topvistos_EUA/actions/runs/34721389624)**.
 
 Siga as [instruções do ambiente](../README.pt-BR.md). Com os artefatos congelados registrados nas pastas de saída padrão:
 
