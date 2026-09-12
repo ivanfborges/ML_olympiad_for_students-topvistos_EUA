@@ -1,0 +1,17 @@
+# Protocolo de avaliação final
+
+[English](EVALUATION-PROTOCOL.md) | **Português**
+
+Registrado antes de inspecionar previsões ou métricas do teste final. A [configuração](../configs/evaluation.json) fixa a análise. O modelo e o limiar de aprovação já foram selecionados na etapa 2.3.
+
+- Verificar decisão congelada, hashes das fontes de treinamento, hashes dos modelos, versões das dependências, hash dos dados e identidade de todas as partições antes das métricas. Usar os mesmos 3.568 casos reservados. Sem treinamento, mudanças de limiar, ajuste de calibração ou engenharia de variáveis.
+- Avaliar o boosting selecionado com limiar 0,60. Apresentar os baselines de frequência e logística já treinados com limiar 0,50 como referências, não como candidatos a uma nova seleção. Os hashes dos modelos são registrados antes da avaliação.
+- Apresentar F1 macro (principal), F1/precisão/recall das classes onde disponíveis, acurácia, acurácia balanceada, ROC-AUC, precisão média, Brier score e matrizes de confusão.
+- Usar 1.000 reamostragens bootstrap pareadas e estratificadas por classe, semente 20260912, para intervalos percentis de 95% do F1 macro de cada modelo, ROC-AUC/Brier do selecionado e diferença de F1 macro entre selecionado e baseline logístico. Manter a contagem das classes em cada reamostragem. Os intervalos descrevem incerteza amostral condicional para modelos fixos, não incerteza de treinamento/seleção ou mudança de população.
+- Examinar calibração do selecionado em dez faixas de probabilidade de mesma largura em [0,1], incluindo 1 na última faixa. Publicar contagens, probabilidades médias previstas, frações observadas de aprovação e intervalos de Wilson de 95%. Faixas vazias têm resumos nulos. Apresentar erro absoluto de calibração ponderado por contagens (ECE) como quantidade descritiva dependente das faixas; Brier também mede discriminação e não isola calibração.
+- Analisar separadamente todas as categorias observadas de continente, escolaridade, região de emprego e unidade salarial. Publicar suporte de cada classe. Suprimir métricas quando o segmento tiver menos de 100 casos ou menos de 20 casos de alguma classe. Nos grupos com suporte, publicar erros, F1 macro, ROC-AUC e intervalos de Wilson de 95% para recall das duas classes.
+- As análises por segmentos são descritivas, se sobrepõem entre dimensões e não têm correção para comparações múltiplas. Não classificar pessoas, inferir causas, certificar equidade ou alterar decisões por segmento. Rótulos e categorias preservam os significados da fonte; campos geográficos não substituem identidades protegidas verificadas.
+- Salvar previsões somente localmente para reproduzir o relatório sem novo ajuste. Publicar apenas agregados e gráficos. Recusar sobrescrita de uma pasta de saída de avaliação existente. Preservar relatórios anteriores de baseline e seleção como etapas históricas.
+- Após a avaliação, o teste foi consumido. Qualquer desenvolvimento posterior de modelo ou limiar exige novo desenho de avaliação; esse mesmo teste não pode voltar a ser apresentado como inédito.
+
+Referências: [calibração de probabilidades](https://scikit-learn.org/stable/modules/calibration.html), [intervalos de confiança por bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html).
