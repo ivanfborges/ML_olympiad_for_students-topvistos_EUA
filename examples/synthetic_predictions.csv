@@ -1,0 +1,4 @@
+id_do_caso,approval_probability,predicted_status,decision_threshold,artifact_origin
+synthetic-001,0.6546183578636913,Aprovado,0.6,recorded
+synthetic-002,0.45443660601340363,Negado,0.6,recorded
+synthetic-003,0.4256381948778221,Negado,0.6,recorded

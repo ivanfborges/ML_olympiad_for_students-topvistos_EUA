@@ -1,0 +1,4 @@
+id_do_caso,continente,educacao_do_empregado,tem_experiencia_de_trabalho,requer_treinamento_de_trabalho,num_de_empregados,ano_de_estabelecimento,regiao_de_emprego,salario_prevalecente,unidade_de_salario,posicao_em_tempo_integral
+synthetic-001,Ásia,Ensino Superior,S,N,120,2005,Oeste,65000,Ano,S
+synthetic-002,Europa,Mestrado,N,S,35,2010,Nordeste,32,Hora,S
+synthetic-003,Unknown example category,Ensino Médio,S,N,-2,1995,Sul,,Ano,N
