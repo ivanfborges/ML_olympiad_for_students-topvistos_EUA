@@ -24,7 +24,7 @@ O [relatório de avaliação final](docs/EVALUATION.pt-BR.md) inclui incerteza, 
 
 Os relatórios de [baseline](docs/BASELINE.pt-BR.md) e [seleção de modelos](docs/SELECTION.pt-BR.md) preservam as etapas anteriores de desenvolvimento. Seus resultados de validação são distintos dos resultados de teste final. O teste final já foi avaliado e não deve orientar novos ajustes.
 
-## Reproduzir o experimento
+## Experimentar o exemplo público
 
 Use uma versão **estável do Python 3.11**. A execução registrada usou Python 3.11.14 no Windows. As dependências estão fixadas em [requirements-lock.txt](requirements-lock.txt). Execute os comandos na raiz do repositório.
 
@@ -34,8 +34,7 @@ Windows PowerShell:
 py -3.11 -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements-lock.txt
 .venv/Scripts/python.exe -m unittest discover -s tests -v
-.venv/Scripts/python.exe -m topvistos.baseline
-.venv/Scripts/python.exe -m topvistos.selection
+.venv/Scripts/python.exe -m topvistos.predict --input examples/synthetic_cases.csv --check-input
 ```
 
 Linux/macOS:
@@ -44,11 +43,21 @@ Linux/macOS:
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m topvistos.baseline
-.venv/bin/python -m topvistos.selection
+.venv/bin/python -m topvistos.predict --input examples/synthetic_cases.csv --check-input
 ```
 
-Obtenha os [dados necessários](data/README.pt-BR.md) e coloque-os em `data/raw/` antes de executar o experimento. O baseline exige o hash registrado do `train.csv`. Os testes usam dados sintéticos e dispensam os arquivos da competição. A integração contínua instala as dependências fixadas e executa os testes no Linux.
+Esses comandos funcionam sem os dados da competição ou binários dos modelos. O [exemplo sintético](examples/README.pt-BR.md) inclui saída ilustrativa; o [guia de inferência](docs/INFERENCE.pt-BR.md) explica a previsão com um artefato confiável e o limiar registrado.
+
+## Reproduzir o desenvolvimento
+
+Para reproduzir o desenvolvimento histórico, obtenha os [dados necessários](data/README.pt-BR.md), coloque-os em `data/raw/` e use o Python do ambiente:
+
+```text
+python -m topvistos.baseline
+python -m topvistos.selection
+```
+
+O baseline exige o hash registrado do `train.csv`. Os testes usam dados sintéticos e dispensam os arquivos da competição. A integração contínua instala as dependências fixadas e executa os testes no Linux.
 
 As saídas de desenvolvimento ficam em `reports/generated/baseline/` e `reports/generated/selection/`: métricas, gráficos, modelos locais e decisão selecionada. Essas pastas são ignoradas pelo Git; somente resultados agregados, metadados da decisão e gráficos são selecionados para a documentação. Carregue modelos serializados apenas de uma fonte confiável.
 
@@ -66,7 +75,7 @@ A avaliação final carrega os artefatos congelados e verifica seus hashes exato
 
 O estudo modela o rótulo histórico `status_do_caso`: `Aprovado=1`, `Negado=0`. Não foi validado para determinar elegibilidade a vistos ou automatizar decisões de imigração. F1 macro é um critério interno de desenvolvimento; a variante oficial de F1 e o resultado no ranking da competição permanecem sem verificação.
 
-A seleção de modelo e limiar e a avaliação final estão concluídas. Próximo passo: finalizar o exemplo de inferência e verificar o fluxo em um checkout limpo. Novas alterações no modelo exigem outro desenho de avaliação. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
+A seleção de modelo e limiar e a avaliação final estão concluídas. A inferência está disponível por uma CLI com validação e exemplos sintéticos. O exemplo público e o fluxo de previsão foram conferidos em checkout separado e ambiente novo. Novas alterações no modelo exigem outro desenho de avaliação. A base original já foi explorada no notebook histórico; a partição reservada não representa nova evidência externa. Os resultados atuais não são diretamente comparáveis aos do notebook, que usa outra divisão.
 
 ## Trabalho histórico e fonte dos dados
 

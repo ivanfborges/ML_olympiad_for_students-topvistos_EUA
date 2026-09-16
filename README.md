@@ -24,7 +24,7 @@ The [final evaluation report](docs/EVALUATION.md) includes uncertainty, calibrat
 
 The [baseline report](docs/BASELINE.md) and [model-selection report](docs/SELECTION.md) preserve the earlier development stages. Their validation scores are distinct from final-test results. The final holdout has now been evaluated and must not guide further tuning.
 
-## Reproduce the experiment
+## Try the public example
 
 Use a **stable Python 3.11** release. The recorded run used Python 3.11.14 on Windows. Dependencies are pinned in [requirements-lock.txt](requirements-lock.txt). Run these commands from the repository root.
 
@@ -34,8 +34,7 @@ Windows PowerShell:
 py -3.11 -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements-lock.txt
 .venv/Scripts/python.exe -m unittest discover -s tests -v
-.venv/Scripts/python.exe -m topvistos.baseline
-.venv/Scripts/python.exe -m topvistos.selection
+.venv/Scripts/python.exe -m topvistos.predict --input examples/synthetic_cases.csv --check-input
 ```
 
 Linux/macOS:
@@ -44,11 +43,21 @@ Linux/macOS:
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -r requirements-lock.txt
 .venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m topvistos.baseline
-.venv/bin/python -m topvistos.selection
+.venv/bin/python -m topvistos.predict --input examples/synthetic_cases.csv --check-input
 ```
 
-Obtain the [required data](data/README.md) and place it in `data/raw/` before running the experiment. The baseline requires the recorded `train.csv` hash. The tests use synthetic fixtures and run without competition data. Continuous integration installs the locked dependencies and runs the tests on Linux.
+These commands run without competition data or model binaries. The [synthetic example](examples/README.md) includes illustrative output; the [inference guide](docs/INFERENCE.md) explains prediction with a trusted artifact and the recorded threshold.
+
+## Reproduce development
+
+For historical development reproduction, obtain the [required data](data/README.md) and place it in `data/raw/`, then use your environment's Python:
+
+```text
+python -m topvistos.baseline
+python -m topvistos.selection
+```
+
+The baseline requires the recorded `train.csv` hash. The tests use synthetic fixtures and run without competition data. Continuous integration installs the locked dependencies and runs the tests on Linux.
 
 Development outputs go to `reports/generated/baseline/` and `reports/generated/selection/`: metrics, charts, local model artifacts and the selected decision. These directories are ignored by Git; only aggregate results, decision metadata and charts are curated into the documentation. Load serialized models only from a source you trust.
 
@@ -66,7 +75,7 @@ Final evaluation loads frozen artifacts and checks their exact hashes; it never 
 
 This study models the historical label `status_do_caso`: `Aprovado=1`, `Negado=0`. It is not validated for visa eligibility or automated immigration decisions. Macro F1 is an internal development criterion; the official competition F1 variant and leaderboard result remain unverified.
 
-Model selection, threshold selection and final evaluation are complete. Next: finish the inference example and verify the clean-checkout workflow. Further model changes require a new evaluation design. The original dataset was explored in the historical notebook, so the reserved partition is not new external evidence. Current scores are not directly comparable with that notebook's different split.
+Model selection, threshold selection and final evaluation are complete. Inference is available through a validated CLI and synthetic examples. The public example and prediction workflow have been checked in a separate checkout with a fresh environment. Further model changes require a new evaluation design. The original dataset was explored in the historical notebook, so the reserved partition is not new external evidence. Current scores are not directly comparable with that notebook's different split.
 
 ## Historical work and data source
 
