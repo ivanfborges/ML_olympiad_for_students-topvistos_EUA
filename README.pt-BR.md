@@ -69,7 +69,7 @@ A avaliação final carrega os artefatos congelados e verifica seus hashes exato
 - Imputação, escala e codificação de categorias ajustadas dentro do pipeline; inferência aceita valores ausentes e categorias desconhecidas.
 - IDs e alvo ficam fora das variáveis. Quantidades negativas de empregados viram valores ausentes com um indicador.
 - Precisão e recall usam a ordem correta dos argumentos; ROC-AUC usa probabilidades.
-- Testes cobrem integridade dos dados, separação das partições, isolamento do pré-processamento, métricas, serialização execução de desenvolvimento sem variáveis ou rótulos do teste final e avaliação final sem novo ajuste.
+- Testes cobrem integridade dos dados, separação das partições, isolamento do pré-processamento, métricas, serialização, execução de desenvolvimento sem variáveis ou rótulos do teste final e avaliação final sem novo ajuste.
 
 ## Escopo e próximos passos
 
